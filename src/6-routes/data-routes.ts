@@ -37,4 +37,8 @@ router.get('/config', (req: Request, res: Response) => {
     const configFilePath = path.join(__dirname, '..', '..', 'config.html');
     res.sendFile(configFilePath);
   });
+
+// router.get('/status', (req: Request, res: Response) => {
+//     const status = await clockService
+// });
 export default router;
