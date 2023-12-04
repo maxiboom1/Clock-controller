@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import clockService from "../5-services/clock-service";
 import path from "path";
+import parseResponse from "../4-utils/parser";
 const router = express.Router();
 
 // POST http://localhost:4001/api/set-time-mode
@@ -33,12 +34,17 @@ router.post("/set-downtimer", (request: Request, response: Response, next: NextF
     }
 });
 
+// GET http://localhost:4001/api/config ==> Web config page
 router.get('/config', (req: Request, res: Response) => {
     const configFilePath = path.join(__dirname, '..', '..', 'config.html');
     res.sendFile(configFilePath);
-  });
+});
 
-// router.get('/status', (req: Request, res: Response) => {
-//     const status = await clockService
-// });
+// GET http://localhost:4001/api/status 
+router.get('/status', async(req: Request, res: Response) => {
+    const status = await clockService.getClockStatus();
+    res.status(201).json(parseResponse(status));
+});
+
+
 export default router;

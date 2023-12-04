@@ -31,12 +31,14 @@ function downTimerMode(): void {
 }
 
 async function getClockStatus(){
-    console.log(ClockOperation.GetStatus);
-  //const status = udpClient.send(Buffer.from(ClockOperation.GetStatus))
+    const status = await udpClient.send(Buffer.from([0xA1, 0x04, 0xB2]));
+    const statusString = status.toString('hex'); // Convert the Buffer to a hexadecimal string
+    return statusString;
 }
 
 export default {
   timeMode,
   upTimerMode,
-  downTimerMode
+  downTimerMode,
+  getClockStatus
 }

@@ -24,6 +24,7 @@ type ParsedResponse = {
 };
 
 const parseResponse = (response: string): ParsedResponse => {
+  console.log(response.substr(38, 2));
   const modeCode = parseInt(response.substr(38, 1), 16) & 0x07;
   const displayMode5 = !!(parseInt(response.substr(38, 1), 16) & 0x20);
   const displayMode7 = !!(parseInt(response.substr(38, 1), 16) & 0x80);
