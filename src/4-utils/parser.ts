@@ -9,7 +9,6 @@ type ParsedResponse = {
   displayMode: {
     modeCode: number;
     mode: string;
-    displayMode: string;
     startStop: boolean;
   };
   downtimerAlarm: {
@@ -24,11 +23,9 @@ type ParsedResponse = {
 };
 
 const parseResponse = (response: string): ParsedResponse => {
-  console.log(response.substr(38, 2));
-  const modeCode = parseInt(response.substr(38, 1), 16) & 0x07;
-  const displayMode5 = !!(parseInt(response.substr(38, 1), 16) & 0x20);
-  const displayMode7 = !!(parseInt(response.substr(38, 1), 16) & 0x80);
-
+  console.log(response);
+  const modeCode = Number(response.match(/.{2}/g)[19]);
+  
   const displayedTimeHex = response.substr(30, 6);
   const displayedTimeSeconds = hexToSeconds(displayedTimeHex);
   const displayedTime = formatSecondsToTime(displayedTimeSeconds);
@@ -40,18 +37,17 @@ const parseResponse = (response: string): ParsedResponse => {
     firmwareVersion: response.substr(22, 4),
     ntpSyncCount: parseInt(response.substr(26, 4), 16),
     displayedTime,
-    tenthsOfSecond: parseInt(response.substr(36, 2), 16),
+    tenthsOfSecond: parseInt(response.substr(38, 2), 16),
     displayMode: {
       modeCode,
       mode: getModeString(modeCode),
-      displayMode: getDisplayModeString(displayMode5, displayMode7),
-      startStop: !!(parseInt(response.substr(38, 1), 16) & 0x40),
+      startStop: !!(parseInt(response.substr(38, 2), 16) & 0x40),
     },
     downtimerAlarm: {
-      alarmDuration: parseInt(response.substr(40, 1), 16) & 0x7F,
-      alarmChecked: !!(parseInt(response.substr(40, 1), 16) & 0x80),
+      alarmDuration: parseInt(response.substr(40, 2), 16) & 0x7F,
+      alarmChecked: !!(parseInt(response.substr(40, 2), 16) & 0x80),
     },
-    daysCurrentlyDisplayed: parseInt(response.substr(42, 2), 16),
+    daysCurrentlyDisplayed: parseInt(response.substr(42, 4), 16),
     digitsValue: parseInt(response.substr(44, 2), 16),
     wifiSignalStrength: parseInt(response.substr(46, 2), 16),
     deviceName: Buffer.from(response.substr(48, 32), 'hex').toString('utf-8').replace(/\0/g, ''),
@@ -60,6 +56,7 @@ const parseResponse = (response: string): ParsedResponse => {
 };
 
 const getModeString = (modeCode: number): string => {
+  console.log(modeCode)
   switch (modeCode) {
     case 0:
       return "time";
@@ -73,18 +70,6 @@ const getModeString = (modeCode: number): string => {
       return "Interval Count Down";
     default:
       return "Unknown";
-  }
-};
-
-const getDisplayModeString = (displayMode5: boolean, displayMode7: boolean): string => {
-  if (!displayMode7 && displayMode5) {
-    return "D:H:M mode";
-  } else if (!displayMode7 && !displayMode5) {
-    return "H:M:S mode";
-  } else if (displayMode7 && !displayMode5) {
-    return "M:S:Tenths mode";
-  } else {
-    return "Unknown";
   }
 };
 
@@ -105,6 +90,3 @@ const formatSecondsToTime = (seconds: number): string => {
 };
 
 export default parseResponse;
-
-
-// 01c0a800768c1f647b8fbb05030008000000008100000000504f455f436c6f636b00000000000000

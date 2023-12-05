@@ -7,17 +7,14 @@ let resendInterval: NodeJS.Timeout | null = null;
 
 function timeMode(): void {
     if (resendInterval) {clearInterval(resendInterval);resendInterval = null;}
-    udpClient.send(Buffer.from([ClockOperation.SetTimeMode]));
+    udpClient.send(Buffer.from(ClockOperation.SetTimeMode));
 }
 
-function upTimerMode(): void {
-    if (resendInterval) {clearInterval(resendInterval);resendInterval = null;}
-    udpClient.send(Buffer.from([ClockOperation.SetUpTimer]));
-}
 // This service should get TriCaster data, now it uses debug time-generator
-function downTimerMode(): void {
-    if (resendInterval) {clearInterval(resendInterval);}
-    udpClient.send(timeStringToBytes(getCurrentTime()));
+function manualMode(): void {
+    
+  if (resendInterval) {clearInterval(resendInterval);}
+    udpClient.send(Buffer.from(ClockOperation.SetDownTimer));
 
     resendInterval = setInterval(() => {
        
@@ -26,7 +23,7 @@ function downTimerMode(): void {
       // ...
       // ...
       
-      udpClient.send(timeStringToBytes(getCurrentTime()));
+      //udpClient.send(timeStringToBytes(getCurrentTime()));
     }, 500);
 }
 
@@ -38,7 +35,6 @@ async function getClockStatus(){
 
 export default {
   timeMode,
-  upTimerMode,
-  downTimerMode,
+  manualMode,
   getClockStatus
 }

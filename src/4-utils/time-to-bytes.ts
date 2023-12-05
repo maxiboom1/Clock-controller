@@ -25,7 +25,7 @@ const timeStringToBytes = (time: string): Buffer => {
       startingDaysLSB,
       startingDaysMSB,
     ]);
-  
+    console.log(byteArray);
     return byteArray;
   };
 

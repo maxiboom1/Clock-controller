@@ -14,20 +14,11 @@ router.post("/set-time-mode", (request: Request, response: Response, next: NextF
     }
 });
 
-// POST http://localhost:4001/api/set-uptimer
-router.post("/set-uptimer", (request: Request, response: Response, next: NextFunction) => {
-    try {
-        clockService.upTimerMode();
-        response.sendStatus(200);
-    } catch (err: any) {
-        next(err);
-    }
-});
 
-// POST http://localhost:4001/api/set-downtimer
-router.post("/set-downtimer", (request: Request, response: Response, next: NextFunction) => {
+// POST http://localhost:4001/api/set-manual-mode
+router.post("/set-manual-mode", (request: Request, response: Response, next: NextFunction) => {
     try {
-        clockService.downTimerMode();
+        clockService.manualMode();
         response.sendStatus(200);
     } catch (err: any) {
         next(err);

@@ -1,3 +1,9 @@
 # Clock controller
  Remote control for timemachines clocks
  API specs: https://www.timemachinescorp.com/wp-content/uploads/TimeMachinesControlAPI.pdf
+
+
+regular time
+01c0a800768c1f647b8fbb0503000d052828000000532100504f455f436c6f636b00000000000000
+countdown
+01c0a800768c1f647b8fbb0503000d000000000200000100504f455f436c6f636b00000000000000

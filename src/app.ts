@@ -3,7 +3,7 @@ import dataRoutes from "./6-routes/data-routes";
 import routeNotFound from "./3-middleware/route-not-found";
 import catchAll from "./3-middleware/catch-all";
 import appConfig from "./4-utils/app-config";
-
+import clockService from "./5-services/clock-service";
 
 //  Web server
 const server = express();
@@ -16,4 +16,5 @@ server.listen(appConfig.webServicePort, () => {
     console.log("Config webpage available on http://localhost:" + appConfig.webServicePort + '/api/config');
     }
 );
+clockService.getClockStatus();
 

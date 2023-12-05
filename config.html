@@ -29,12 +29,7 @@
       color: white;
     }
 
-    button.up-timer {
-      background-color: #4CAF50;
-      color: white;
-    }
-
-    button.down-timer {
+    button.manual-mode {
       background-color: #4CAF50;
       color: white;
     }
@@ -46,50 +41,50 @@
 </head>
 <body>
   <h1>Configuration Page</h1>
-  <button class="time-mode" onclick="sendRequest('/api/set-time-mode')">Set Time Mode</button>
-  <button class="up-timer" onclick="sendRequest('/api/set-uptimer')">Set Up Timer</button>
-  <button class="down-timer" onclick="sendRequest('/api/set-downtimer')">Set Down Timer</button>
+  <button class="time-mode" onclick="sendRequest('/api/set-time-mode')">Time Mode</button>
+  <button class="manual-mode" onclick="sendRequest('/api/set-manual-mode')">Manual Mode</button>
 
   <script>
-    
-function updateButtonColors(mode) {
-  console.log('from class change: ', mode);
-  const buttons = document.querySelectorAll('button');
-  buttons.forEach(button => {
-    button.classList.remove('time-mode', 'up-timer', 'down-timer');
-  });
+    function updateButtonColors(mode) {
+      console.log('from class change: ', mode);
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(button => {
+        button.classList.remove('time-mode', 'manual-mode');
+      });
 
-  if (mode === 'time') {
-    document.querySelector('.time-mode').classList.add('time-mode');
-  } else if (mode === 'Up Timer') {
-    document.querySelector('.up-timer').classList.add('up-timer');
-  } else if (mode === 'Down Timer') {
-    document.querySelector('.down-timer').classList.add('down-timer');
-  }
-}
+      if (mode === 'Running...') {
+        document.querySelector('.time-mode').classList.add('time-mode');
+      } else if (mode === 'Paused') {
+        document.querySelector('.manual-mode').classList.add('manual-mode');
+      }
+    }
 
-function sendRequest(route) {
-  fetch(`http://localhost:4001${route}`, { method: 'POST' })
-    .then(response => {
-      if (!response.ok) {throw new Error(`HTTP error! Status: ${response.status}`);}
-      syncStatus();
-    })
-    .catch(error => {console.error('Error:', error);});
-}
+    function sendRequest(route) {
+      fetch(`http://localhost:4001${route}`, { method: 'POST' })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          syncStatus();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
 
-function syncStatus() {
-  fetch('http://localhost:4001/api/status')
-    .then(response => response.json())
-    .then(data => {
-      console.log(data.displayMode);
-      //updateButtonColors(data.displayMode.mode);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-};
+    function syncStatus() {
+      fetch('http://localhost:4001/api/status')
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          updateButtonColors(data.displayMode.mode);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    };
 
-//syncStatus();
+    syncStatus();
   </script>
 </body>
 </html>
