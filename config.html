@@ -24,39 +24,92 @@
       border-radius: 5px;
     }
 
-    button.time-mode {
-      background-color: #4CAF50;
+    button.timeMode {
+      background-color: #4caf4f50;
       color: white;
     }
 
-    button.manual-mode {
-      background-color: #4CAF50;
+    button.manualMode {
+      background-color: #4caf4f50;
       color: white;
     }
 
-    button:hover {
-      background-color: #45a049;
+    button.active {
+      background-color: rgba(230, 16, 16, 0.808);
+      color: white;
     }
+
+    /* New styles for status div and input div */
+    #statusDiv, #inputDiv {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    input {
+      padding: 8px;
+      margin-right: 10px;
+    }
+
   </style>
 </head>
 <body>
   <h1>Configuration Page</h1>
-  <button class="time-mode" onclick="sendRequest('/api/set-time-mode')">Time Mode</button>
-  <button class="manual-mode" onclick="sendRequest('/api/set-manual-mode')">Manual Mode</button>
+  <button class="timeMode" onclick="sendRequest('/api/set-time-mode')">Time Mode</button>
+  <button class="manualMode" onclick="sendRequest('/api/set-manual-mode')">Manual Mode</button>
+
+  <!-- New div for status data -->
+  <div id="statusDiv"></div>
+
+  <!-- New div for input field and set button -->
+  <div id="inputDiv">
+    <input type="text" id="ipInput" placeholder="Enter IP Address">
+    <button onclick="setConfig()">Set</button>
+  </div>
 
   <script>
     function updateButtonColors(mode) {
-      console.log('from class change: ', mode);
       const buttons = document.querySelectorAll('button');
-      buttons.forEach(button => {
-        button.classList.remove('time-mode', 'manual-mode');
-      });
-
-      if (mode === 'Running...') {
-        document.querySelector('.time-mode').classList.add('time-mode');
-      } else if (mode === 'Paused') {
-        document.querySelector('.manual-mode').classList.add('manual-mode');
+      if (mode === 'timeMode') {
+        document.querySelector('.timeMode').classList.add('active');
+        document.querySelector('.manualMode').classList.remove('active');
+      } else if (mode === 'manualMode') {
+        document.querySelector('.manualMode').classList.add('active');
+        document.querySelector('.timeMode').classList.remove('active');
       }
+    }
+
+    function updateStatus(statusData) {
+      const statusDiv = document.getElementById('statusDiv');
+      statusDiv.innerHTML = `
+        <p>Displayed Time: ${statusData.displayedTime}</p>
+        <p>Clock IP Address: ${statusData.clientIPAddress}</p>
+      `;
+    }
+
+    function setConfig() {
+      const ipInput = document.getElementById('ipInput');
+      const ipAddress = ipInput.value;
+
+      // Validate if the input is a valid IP address before sending the request
+
+      // Send the request to set the configuration
+      fetch(`http://localhost:4001/api/setConfig`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ipAddress }),
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          setTimeout(syncStatus, 200);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
     }
 
     function sendRequest(route) {
@@ -65,7 +118,7 @@
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
-          syncStatus();
+          setTimeout(syncStatus, 200);
         })
         .catch(error => {
           console.error('Error:', error);
@@ -76,13 +129,13 @@
       fetch('http://localhost:4001/api/status')
         .then(response => response.json())
         .then(data => {
-          console.log(data);
           updateButtonColors(data.displayMode.mode);
+          updateStatus(data);
         })
         .catch(error => {
           console.error('Error:', error);
         });
-    };
+    }
 
     syncStatus();
   </script>

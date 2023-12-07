@@ -1,8 +1,7 @@
 import udpClient from "../1-dal/udp-client";
 import ClockOperation from "../2-models/clock-oparation";
-import getCurrentTime from "../4-utils/time-gen";
-import timeStringToBytes from "../4-utils/time-to-bytes";
-
+import parseResponse from "../4-utils/parser";
+import tricasterService from "./tricaster-service";
 let resendInterval: NodeJS.Timeout | null = null;
 
 function timeMode(): void {
@@ -11,14 +10,15 @@ function timeMode(): void {
 }
 
 // This service should get TriCaster data, now it uses debug time-generator
-function manualMode(): void {
+async function manualMode(): Promise<void> {
     
   if (resendInterval) {clearInterval(resendInterval);}
+    const tricasterTc = await tricasterService.fetchDdrTimecode();
+    console.log(tricasterTc);
     udpClient.send(Buffer.from(ClockOperation.SetDownTimer));
-
     resendInterval = setInterval(() => {
        
-      // here will be the logic for the tricaster data
+      // here we work with tricaster service
       // ...
       // ...
       // ...
@@ -29,8 +29,9 @@ function manualMode(): void {
 
 async function getClockStatus(){
     const status = await udpClient.send(Buffer.from([0xA1, 0x04, 0xB2]));
-    const statusString = status.toString('hex'); // Convert the Buffer to a hexadecimal string
-    return statusString;
+    const statusString = status.toString('hex'); 
+    const statusObj = parseResponse(statusString);
+    return statusObj;
 }
 
 export default {

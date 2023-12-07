@@ -23,9 +23,7 @@ type ParsedResponse = {
 };
 
 const parseResponse = (response: string): ParsedResponse => {
-  console.log(response);
   const modeCode = Number(response.match(/.{2}/g)[19]);
-  
   const displayedTimeHex = response.substr(30, 6);
   const displayedTimeSeconds = hexToSeconds(displayedTimeHex);
   const displayedTime = formatSecondsToTime(displayedTimeSeconds);
@@ -56,20 +54,19 @@ const parseResponse = (response: string): ParsedResponse => {
 };
 
 const getModeString = (modeCode: number): string => {
-  console.log(modeCode)
   switch (modeCode) {
     case 0:
-      return "time";
+      return "timeMode";
     case 1:
-      return "Up Timer";
+      return "upTimer";
     case 2:
-      return "Down Timer";
+      return "manualMode";
     case 3:
-      return "Interval Count Up";
+      return "intervalCountUp";
     case 4:
-      return "Interval Count Down";
+      return "intervalCountDown";
     default:
-      return "Unknown";
+      return "unknown";
   }
 };
 
