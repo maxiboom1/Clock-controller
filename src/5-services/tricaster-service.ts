@@ -2,7 +2,7 @@ import axios from "axios";
 import appConfig from "../4-utils/app-config";
 const { parseString } = require('xml2js');
 
-async function fetchDdrTimecode() {
+async function getTricasterTimecode() {
   try {
     const response = await axios.get(appConfig.tricasterEmulatorURL);
     const xml = response.data;
@@ -24,5 +24,5 @@ async function fetchDdrTimecode() {
 
 // Export the function
 export default {
-  fetchDdrTimecode
+  getTricasterTimecode
 };

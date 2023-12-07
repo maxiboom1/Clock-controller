@@ -16,5 +16,5 @@ server.listen(appConfig.webServicePort, () => {
     console.log("Config webpage available on http://localhost:" + appConfig.webServicePort + '/api/config');
     }
 );
-clockService.getClockStatus();
+clockService.manualMode();
 

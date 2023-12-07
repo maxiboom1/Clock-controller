@@ -1,3 +1,4 @@
+// Gets HHMMSS str, and return time-machines byte arr command
 const timeStringToBytes = (time: string): Buffer => {
     const [hours, minutes, seconds] = time.split(':').map(Number);
   
@@ -25,8 +26,23 @@ const timeStringToBytes = (time: string): Buffer => {
       startingDaysLSB,
       startingDaysMSB,
     ]);
-    console.log(byteArray);
     return byteArray;
-  };
+};
 
-export default timeStringToBytes;
+// Gets number, and returns HH:MM:SS
+function secondsToHMS(seconds: number) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+
+  const formattedHours = hours.toString().padStart(2, '0');
+  const formattedMinutes = minutes.toString().padStart(2, '0');
+  const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
+
+  return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+}
+
+export default {
+  timeStringToBytes,
+  secondsToHMS
+};

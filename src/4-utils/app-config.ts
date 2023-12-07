@@ -22,7 +22,6 @@ class AppConfig {
         this.controlDevice = controlDevice;
     }
 
-    
 }
 
 const appConfig = new AppConfig();
