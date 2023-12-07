@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/bootstrap.min.css">    
+    <link rel="stylesheet" href="style/bootstrap.min.css">   
+    <link rel="stylesheet" href="style/style.css"> 
     <title>Document</title>
 </head>
 
@@ -22,6 +23,8 @@
         </ul>
 
         <div class="tab-content px-5 mt-2">
+            
+            <!-- Clock tab -->
             <div class="tab-pane fade show p-4 active" id="clockConfigContent">
                 
                 <!-- Form with clock host and mode -->
@@ -49,19 +52,92 @@
                 <button type="button" class="btn btn-primary btn-lg mx-auto d-block mt-5" style="width: 300px;">SET</button>
 
             </div>
+            
+            <!-- Controller tab -->
+            <div class="tab-pane fade p-4" id="controllerConfigContent">
+                <div class="row g-2">
+                    
+                    <!-- Set controller host -->
+                    <span>Controller host</span>
+                    <div class="col-md-12">
+                        <div class="form-floating">
+                            <input type="email" class="form-control" id="clockHost">
+                            <label for="floatingInputGrid">Clock ip address</label>
+                        </div>
+                    </div>                    
+                    
+                    <!-- Choose controller -->
+                    <span>Controller</span>
+                    <div class="col-md-12">
+                        <div class="form-floating ">
+                            <select class="form-select" id="controllerMode" onchange="handleControllerChange()">
+                                <option selected>Select..</option>
+                                <option value="1">vMix</option>
+                                <option value="2">Tricaster</option>
+                            </select>
+                            <label for="controllerMode">Choose controller</label>
+                        </div>
+                    </div>
 
-            <div class="tab-pane fade" id="controllerConfigContent">
-                <p>asdasdsad</p>
+                    <!-- Choose DDR1-4 -->
+                    <div id="tricasterContainer">
+                        <span>Tricaster DDR</span>
+                        <div class="col-md-12">
+                            <div class="form-floating ">
+                                <select class="form-select" id="tricasterDDR">
+                                    <option selected>Select..</option>
+                                    <option value="1">DDR1</option>
+                                    <option value="2">DDR2</option>
+                                    <option value="3">DDR3</option>
+                                    <option value="4">DDR3</option>
+                                </select>
+                                <label for="tricasterDDR">Choose tricaster DDR to watch</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Choose vMix input to watch -->
+                    <div id="vmixContainer">
+                        <span>vMix input</span>
+                        <div class="col-md-12">
+                            <div class="form-floating ">
+                                <select class="form-select" id="vmixInput">
+                                    <option selected>Select..</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                                <label for="tricasterDDR">Choose vMix input to watch</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+                <button type="button" class="btn btn-primary btn-lg mx-auto d-block mt-5" style="width: 300px;">SET</button>
             </div>
+
         </div>
     </div>
 
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
-    
     <script>
         var myTabs = new bootstrap.Tab(document.getElementById('clockConfigTab'));
         myTabs.show();
+
+        function handleControllerChange(){
+            const controllerMode = document.getElementById('controllerMode').value;
+            console.log(controllerMode)
+            if(controllerMode === "1"){
+                document.getElementById('tricasterContainer').style.display = 'none';
+                document.getElementById('vmixContainer').style.display = 'block';
+            } else if (controllerMode === "2"){
+                document.getElementById('tricasterContainer').style.display = 'block';
+                document.getElementById('vmixContainer').style.display = 'none';
+            }
+        }
     </script>
 </body>
 
