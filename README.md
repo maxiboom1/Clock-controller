@@ -1,9 +1,16 @@
 # Clock controller
- Remote control for timemachines clocks
+ Remote control for time-machines clocks
  API specs: https://www.timemachinescorp.com/wp-content/uploads/TimeMachinesControlAPI.pdf
 
+ My concept is to build modular app, each module will provide methods to device.
 
-regular time
-01c0a800768c1f647b8fbb0503000d052828000000532100504f455f436c6f636b00000000000000
-countdown
-01c0a800768c1f647b8fbb0503000d000000000200000100504f455f436c6f636b00000000000000
+ For example, i have clock-module - that can interact with time-machines clock.
+
+ Then, I added Tricaster module that can fetch timecode data from tricaster DDR's (Using tricaster's REST).
+
+ Then, I added vMix module, that can fetch timecode data from vMix (using TCP/IP protocol).
+
+ The app have web config, and i plan to add clock and clock-controllers config there (hosts, which src to watch etc...).
+
+ Also, in the future, it will be nice to add licensing mechanism.
+
