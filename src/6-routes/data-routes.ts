@@ -26,7 +26,7 @@ router.post("/set-manual-mode", (request: Request, response: Response, next: Nex
 
 // GET http://localhost:4001/api/config ==> Web config page
 router.get('/config', (req: Request, res: Response) => {
-    const configFilePath = path.join(__dirname, '..', '..', 'config.html');
+    const configFilePath = path.join(__dirname, '..', '../web-page', 'index.html');
     res.sendFile(configFilePath);
 });
 
