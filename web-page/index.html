@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/bootstrap.min.css">    
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center p-2">Clock controller setting page</h1>
+        <hr>
+
+        <ul class="nav nav-tabs" id="myTabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="clockConfigTab" data-bs-toggle="tab" href="#clockConfigContent">Clock config</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="controllerConfigTab" data-bs-toggle="tab" href="#controllerConfigContent">Controller config</a>
+            </li>
+        </ul>
+
+        <div class="tab-content px-5 mt-2">
+            <div class="tab-pane fade show p-4 active" id="clockConfigContent">
+                
+                <!-- Form with clock host and mode -->
+                <div class="row g-2">
+                    <span>Clock host</span>
+                    <div class="col-md-12">
+                        <div class="form-floating">
+                            <input type="email" class="form-control" id="clockHost">
+                            <label for="floatingInputGrid">Clock ip address</label>
+                        </div>
+                    </div>
+                    <span>Clock mode</span>
+                    <div class="col-md-12">
+                        <div class="form-floating ">
+                            <select class="form-select" id="floatingSelectGrid">
+                                <option selected>Select..</option>
+                                <option value="1">Time mode</option>
+                                <option value="2">Controller mode</option>
+                            </select>
+                            <label for="floatingSelectGrid">Set clock mode</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn btn-primary btn-lg mx-auto d-block mt-5" style="width: 300px;">SET</button>
+
+            </div>
+
+            <div class="tab-pane fade" id="controllerConfigContent">
+                <p>asdasdsad</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        var myTabs = new bootstrap.Tab(document.getElementById('clockConfigTab'));
+        myTabs.show();
+    </script>
+</body>
+
+</html>
