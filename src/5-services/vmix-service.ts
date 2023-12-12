@@ -4,6 +4,7 @@ import timeConvertors from "../4-utils/timeConvertors";
 async function getVmixTimecode(): Promise<string> {
     try {
         const dataToSend = `XMLTEXT vmix/inputs/input[1]/@position\r\n`;
+        
         const response = await tcpClient.sendAndReceiveData(dataToSend);
 
         // Explicitly cast response to a string

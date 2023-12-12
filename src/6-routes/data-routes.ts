@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import clockService from "../5-services/clock-service";
-import path from "path";
+import appConfig from "../4-utils/app-config";
 const router = express.Router();
 
 // POST http://localhost:4001/api/set-time-mode
@@ -13,7 +13,6 @@ router.post("/set-time-mode", (request: Request, response: Response, next: NextF
     }
 });
 
-
 // POST http://localhost:4001/api/set-manual-mode
 router.post("/set-manual-mode", (request: Request, response: Response, next: NextFunction) => {
     try {
@@ -24,10 +23,15 @@ router.post("/set-manual-mode", (request: Request, response: Response, next: Nex
     }
 });
 
-// GET http://localhost:4001/api/config ==> Web config page
-router.get('/config', (req: Request, res: Response) => {
-    const configFilePath = path.join(__dirname, '..', '../web-page', 'index.html');
-    res.sendFile(configFilePath);
+// POST http://localhost:4001/api/clock-config
+router.post("/set-clock-config", (request: Request, response: Response, next: NextFunction) => {
+    try {
+        appConfig.setClockHost(request.body.clockHost);
+        
+        
+    } catch (err: any) {
+        next(err);
+    }
 });
 
 // GET http://localhost:4001/api/status 
@@ -36,11 +40,9 @@ router.get('/status', async(req: Request, res: Response) => {
     res.status(201).json(status);
 });
 
-
 //TRICASTER EMULATOR - GET http://localhost:4001/api/tricaster
 router.get('/tricaster', async (req: Request, res: Response) => {
     const random = Math.random() * 100000;
-    console.log(random);
     const xmlString = `
     <timecode>
     <ddr4 clip_seconds_elapsed="0" clip_seconds_remaining="25.992633" clip_embedded_timecode="0" clip_in="0" clip_out="25.992633" file_duration="26.026" play_speed="1" clip_framerate="29.97003" playlist_seconds_elapsed="0" playlist_seconds_remaining="25.992633" preset_index="0" clip_index="0" num_clips="1"/>
@@ -57,6 +59,7 @@ router.get('/tricaster', async (req: Request, res: Response) => {
     // Send the XML string in the response body
     res.status(201).send(xmlString);
 });
+
 
 
 export default router;

@@ -1,5 +1,3 @@
-// tcpClient.js
-
 import net from 'net';
 
 class TcpClient {

@@ -14,25 +14,43 @@ function timeMode(): void {
 async function manualMode(): Promise<void> {
     
   if (resendInterval) {clearInterval(resendInterval);}
-    
-    udpClient.send(Buffer.from(ClockOperation.SetDownTimer));
+    sendBufferToClock(ClockOperation.SetDownTimer);
     
     resendInterval = setInterval(async () => {
-      const tricasterTc = await tricasterService.getTricasterTimecode();
-      const vmixHSM = await getVmixTimecode();
+      const tricasterTc = await tricasterService.getTricasterTimecode(); // Returns seconds number
       const tricasterTcHMS = timeConvertors.secondsToHMS(tricasterTc);
-      udpClient.send(timeConvertors.timeStringToBytes(vmixHSM));
-
+      await sendHMSToClock(tricasterTcHMS)
     }, 1000);
 
 }
 
 async function getClockStatus(){
-    const status = await udpClient.send(Buffer.from([0xA1, 0x04, 0xB2]));
+    const status = await sendBufferToClock(ClockOperation.GetClockStatus);
     const statusString = status.toString('hex'); 
     const statusObj = parseResponse(statusString);
     return statusObj;
 }
+
+// Got HH:MM:SS string, converts it to byte array, and sends to clock. Example: 10:52:20
+async function sendHMSToClock(HHMMSS:string): Promise<void> {
+  try {
+    await udpClient.send(timeConvertors.timeStringToBytes(HHMMSS));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// Got num array, converts it to buffer and sends to clock. Example: [165, 1, 0]
+async function sendBufferToClock(byteArr: number[]): Promise<Buffer> {
+  try {
+    const result = await udpClient.send(Buffer.from(byteArr));
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
 
 export default {
   timeMode,

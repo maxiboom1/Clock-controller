@@ -3,6 +3,7 @@ import appConfig from "../4-utils/app-config";
 const { parseString } = require('xml2js');
 
 async function getTricasterTimecode() {
+  const ddr = "ddr2";
   try {
     const response = await axios.get(appConfig.tricasterEmulatorURL);
     const xml = response.data;
@@ -13,7 +14,7 @@ async function getTricasterTimecode() {
         jsonData = result;
     });
 
-    const clipSecondsRemaining = Math.floor(jsonData.timecode.ddr2['$'].clip_seconds_remaining);
+    const clipSecondsRemaining = Math.floor(jsonData.timecode[ddr]['$'].clip_seconds_remaining);
     return clipSecondsRemaining;
 
   } catch (error) {

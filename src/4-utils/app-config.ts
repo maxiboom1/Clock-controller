@@ -8,6 +8,8 @@ class AppConfig {
 
     controlDeviceHost = "127.0.0.1";
     
+    requestTimeout = 1000;
+
     webServicePort = 4001;
 
     tricasterTimecodeURL = `http://${this.controlDeviceHost}/v1/dictionary?key=ddr_timecode`;
