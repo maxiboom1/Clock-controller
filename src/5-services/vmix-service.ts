@@ -13,11 +13,12 @@ async function getVmixTimecode(): Promise<string> {
         const position = Math.floor( Number(positionData.split(" ")[2]) / 1000);
         const duration = Math.floor( Number(durationData.split(" ")[2]) / 1000);
         const remaining = duration - position; 
-
-        const timecodeHMS = timeConvertors.secondsToHMS(remaining);        
-
-        return timecodeHMS;
-
+        if(appConfig.timecodeMode === "remaining"){
+            return timeConvertors.secondsToHMS(remaining);
+        }
+        if(appConfig.timecodeMode === "position"){
+            return timeConvertors.secondsToHMS(position);
+        }
     } catch (error) {
         console.error('Error:', error);
         return '';

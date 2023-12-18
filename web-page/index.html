@@ -60,8 +60,8 @@
                 <div class="row g-2">
                     
                     <!-- Set controller host -->
-                    <span>Controller host</span>
                     <div class="col">
+                        <span>Controller host</span>
                         <div class="form-floating">
                             <input type="email" class="form-control" id="controllerHost">
                             <label for="floatingInputGrid">Controller ip address</label>
@@ -69,8 +69,8 @@
                     </div>                    
                     
                     <!-- Choose controller -->
-                    <span>Controller</span>
                     <div class="col">
+                        <span>Controller</span>
                         <div class="form-floating ">
                             <select class="form-select" id="controllerType" onchange="handleControllerChange()">
                                 <option selected>Select..</option>
@@ -82,55 +82,49 @@
                     </div>
 
                     <!-- Choose DDR1-4 -->
-                    <div id="tricasterContainer">
+                    
+                    <div class="col" id="tricasterContainer">
                         <span>Tricaster DDR</span>
-                        <div class="col-md-6">
-                            <div class="form-floating ">
-                                <select class="form-select" id="tricasterDDR">
-                                    <option selected>Select..</option>
-                                    <option value="1">DDR1</option>
-                                    <option value="2">DDR2</option>
-                                    <option value="3">DDR3</option>
-                                    <option value="4">DDR4</option>
-                                </select>
-                                <label for="tricasterDDR">Choose tricaster DDR to watch</label>
-                            </div>
+                        <div class="form-floating ">
+                            <select class="form-select" id="tricasterDDR">
+                                <option selected>Select..</option>
+                                <option value="1">DDR1</option>
+                                <option value="2">DDR2</option>
+                                <option value="3">DDR3</option>
+                                <option value="4">DDR4</option>
+                            </select>
+                            <label for="tricasterDDR">Choose tricaster DDR to watch</label>
                         </div>
                     </div>
+                   
 
                     <!-- Choose vMix input to watch -->
-                    <div id="vmixContainer">
+                    <div class="col" id="vmixContainer">
                         <span>vMix input</span>
-                        <div class="col-md-6">
-                            <div class="form-floating ">
-                                <select class="form-select" id="vmixInput">
-                                    <option selected>Select..</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                </select>
-                                <label for="tricasterDDR">Choose vMix input to watch</label>
-                            </div>
+                        <div class="form-floating ">
+                            <select class="form-select" id="vmixInput">
+                                <option selected>Select..</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                            <label for="tricasterDDR">Choose vMix input to watch</label>
                         </div>
                     </div>
 
                     <!-- Choose mode remaining/position -->
-                    <div id="tcModeContainer">
+                    <div class="col" id="tcModeContainer">
                         <span>Timecode mode</span>
-                        <div class="col-md-6">
-                            <div class="form-floating ">
-                                <select class="form-select" id="tcMode">
-                                    <option selected>Select..</option>
-                                    <option value="1">Remaining</option>
-                                    <option value="2">Position</option>
-                                </select>
-                                <label for="tcMode">Choose display timecode mode</label>
-                            </div>
+                        <div class="form-floating ">
+                            <select class="form-select" id="tcMode">
+                                <option selected>Select..</option>
+                                <option value="1">remaining</option>
+                                <option value="2">position</option>
+                            </select>
+                            <label for="tcMode">Choose display timecode mode</label>
                         </div>
-
                     </div>
-                    
 
                 </div>
                 <button type="button" onclick="setControllerConfig()" class="btn btn-primary btn-lg mx-auto d-block mt-5" style="width: 300px;">SET</button>

@@ -50,11 +50,17 @@ function setControllerConfig(){
             console.log(`Sorry, no controller selected`);
         }
           
+    const tcModeEl = document.getElementById("tcMode");
+    const tcModeValue = tcModeEl.value;
+    const tcModeOptions = Array.from(tcModeEl.options).find(option => option.value === tcModeValue);
+    
     const controllerConfig={
         controllerHost: controllerHost.value,
         controllerType:selectedOption.textContent,
-        controllerInput: controllerInput
+        controllerInput: controllerInput,
+        controllerTcMode: tcModeOptions.textContent
     }
+    console.log(controllerConfig);
     postData("/api/set-controller", controllerConfig);
 
 }
@@ -99,7 +105,7 @@ getData('/api/status')
         const controllerTypeEl = document.getElementById('controllerType');
         const controllerTypeOption = Array.from(controllerTypeEl.options).find(option => option.textContent === responseData.controlDevice);
         if (controllerTypeOption) {controllerTypeOption.selected = true;}
-
+        handleControllerChange();
     })  
     .catch(error => {
         // Handle the error

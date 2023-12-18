@@ -36,6 +36,7 @@ router.post("/set-clock", (request: Request, response: Response, next: NextFunct
 // POST http://localhost:4001/api/set-controller {controllerHost: 'localhost',controllerType: 'Tricaster',controllerInput: 'DDR3'}
 router.post("/set-controller", (request: Request, response: Response, next: NextFunction) => {
     try {
+        appConfig.setTimecodeMode(request.body.controllerTcMode);
         appConfig.setControllerHost(request.body.controllerHost);
         appConfig.setControlDevice(request.body.controllerType);
         appConfig.setControllerInput(request.body.controllerInput);

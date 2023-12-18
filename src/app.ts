@@ -26,8 +26,7 @@ server.listen(appConfig.webServicePort, () => {
     }
 );
 
+
 clockService.manualMode();
-
-
 
 

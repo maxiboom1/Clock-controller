@@ -5,6 +5,7 @@ class AppConfig {
     clockHost = '192.168.0.132';
     controlDevice = "tricaster";
     controlDeviceHost = "127.0.0.1";
+    timecodeMode = "remaining";
     controllerInput = "1";
     requestTimeout = 1000;
     webServicePort = 4001;
@@ -33,6 +34,11 @@ class AppConfig {
 
     setControllerInput(controllerInput: string): void {
         this.controllerInput = controllerInput;
+        this.saveToFile('config.json');
+    }
+
+    setTimecodeMode(timecodeMode: string): void {
+        this.timecodeMode = timecodeMode;
         this.saveToFile('config.json');
     }
 
