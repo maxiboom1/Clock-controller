@@ -20,8 +20,7 @@ async function getVmixTimecode(): Promise<string> {
             return timeConvertors.secondsToHMS(position);
         }
     } catch (error) {
-        console.error('Error:', error);
-        return '';
+        return "00:00:00";
     }
 }
 

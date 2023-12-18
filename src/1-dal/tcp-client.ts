@@ -19,25 +19,21 @@ class TcpClient {
         }
     
         // Create a new connection
-        this.client = net.createConnection({ host: appConfig.controlDeviceHost, port: 8099 }, () => {
-            console.log('Reconnected to vMix');
-        });
+        this.client = net.createConnection({ host: appConfig.controlDeviceHost, port: 8099 }, () => {});
     
         // Handle close event during reconnection
-        this.client.once('close', () => {
-            console.log('Connection closed during reconnection');
-        });
+        this.client.once('close', () => {});
     
         // Handle errors during reconnection
         this.client.once('error', (error) => {
-            console.error('Error during reconnection:', error.message);
+            console.error("vMix connection fail: ", error.message);
         });
     }
 
     public async sendAndReceiveData(dataToSend: string): Promise<string> {
         return new Promise((resolve, reject) => {
             if (!this.client.writable) {
-                reject('Not connected to the server');
+                reject();
                 this.reconnect();
                 return;
             }
