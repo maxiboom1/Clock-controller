@@ -1,35 +1,54 @@
 import net from 'net';
+import appConfig from '../4-utils/app-config';
 
 class TcpClient {
 
     private client: net.Socket;
-    
+
     constructor() {
-        this.client = net.createConnection({ host: "127.0.0.1", port: 8099 }, () => {
-        console.log('Connected to the server');
-    });
-
-    this.client.on('end', () => {console.log('Disconnected from the server');});
-
-    this.client.on('error', (err) => {console.error('Error:', err.message);});
-  
+        this.client = net.createConnection({ host: appConfig.controlDeviceHost, port: 8099 }, () => {console.log('Connected to vMix');});
+        this.client.on('close', () => {console.log('Disconnected from the server');});
+        this.client.on('error', (err) => {console.log(err.message);});
     }
 
-    async sendAndReceiveData(dataToSend: string):Promise<string> {
+    private reconnect() {
+        // Close the current connection if it exists
+        if (this.client) {
+            this.client.end();
+            this.client.destroy();
+        }
+    
+        // Create a new connection
+        this.client = net.createConnection({ host: appConfig.controlDeviceHost, port: 8099 }, () => {
+            console.log('Reconnected to vMix');
+        });
+    
+        // Handle close event during reconnection
+        this.client.once('close', () => {
+            console.log('Connection closed during reconnection');
+        });
+    
+        // Handle errors during reconnection
+        this.client.once('error', (error) => {
+            console.error('Error during reconnection:', error.message);
+        });
+    }
+
+    public async sendAndReceiveData(dataToSend: string): Promise<string> {
         return new Promise((resolve, reject) => {
+            if (!this.client.writable) {
+                reject('Not connected to the server');
+                this.reconnect();
+                return;
+            }
+
             this.client.write(dataToSend);
 
-            // Handle the response
             this.client.once('data', (data) => {
                 resolve(data.toString());
             });
-
-            // Handle errors
-            this.client.once('error', (err) => {
-                reject(err);
-            });
         });
-  }
+    }
 }
 
 const tcpClient = new TcpClient();

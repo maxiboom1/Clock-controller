@@ -19,10 +19,6 @@ async function manualMode(): Promise<void> {
     sendBufferToClock(ClockOperation.SetDownTimer);
     
     resendInterval = setInterval(async () => {
-      if(appConfig.clockMode === "Time mode"){
-        timeMode();
-        return;
-      }
       switch(appConfig.controlDevice){
         case "Tricaster": 
           const tricasterHMS = await tricasterService.getTricasterTimecode(); // Returns HHMMSS
