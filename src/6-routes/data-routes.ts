@@ -27,6 +27,7 @@ router.post("/set-manual-mode", (request: Request, response: Response, next: Nex
 router.post("/set-clock", (request: Request, response: Response, next: NextFunction) => {
     try {
         appConfig.setClockHost(request.body.clockHost);
+        appConfig.setClockMode(request.body.clockMode);
         
     } catch (err: any) {
         next(err);

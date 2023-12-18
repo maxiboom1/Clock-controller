@@ -14,18 +14,24 @@ function timeMode(): void {
 }
 
 async function manualMode(): Promise<void> {
-    
+
   if (resendInterval) {clearInterval(resendInterval);}
     sendBufferToClock(ClockOperation.SetDownTimer);
     
     resendInterval = setInterval(async () => {
+      if(appConfig.clockMode === "Time mode"){
+        timeMode();
+        return;
+      }
       switch(appConfig.controlDevice){
-        case "Tricaster":       
-          const tricasterHMS = await tricasterService.getTricasterTimecode(); // Returns seconds number
+        case "Tricaster": 
+          const tricasterHMS = await tricasterService.getTricasterTimecode(); // Returns HHMMSS
           await sendHMSToClock(tricasterHMS);
+          break;
         case "vMix":
-          const vmixHMS = await getVmixTimecode();
+          const vmixHMS = await getVmixTimecode(); // Return HHMMSS
           await sendHMSToClock(vmixHMS);
+          break;
       }
 
     }, 1000);

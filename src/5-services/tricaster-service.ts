@@ -9,13 +9,13 @@ async function getTricasterTimecode() {
     const response = await axios.get(appConfig.tricasterEmulatorURL);
     const xml = response.data;
     let jsonData: any;
-    
     parseString(xml, { explicitArray: false }, (err, result) => {
         if (err) {throw new Error(err);}
         jsonData = result;
     });
 
     const clipSecondsRemaining = Math.floor(jsonData.timecode[ddr]['$'].clip_seconds_remaining);
+
     const tricasterHMS = timeConvertors.secondsToHMS(clipSecondsRemaining);
     return tricasterHMS;
 

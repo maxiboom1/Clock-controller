@@ -1,8 +1,10 @@
 import * as fs from 'fs';
+import clockService from '../5-services/clock-service';
 
 class AppConfig {
     clockPort = 7372;
     clockHost = '192.168.0.132';
+    clockMode = "Time mode";
     controlDevice = "tricaster";
     controlDeviceHost = "127.0.0.1";
     timecodeMode = "remaining";
@@ -17,27 +19,38 @@ class AppConfig {
         this.loadFromFile('config.json');
     }
 
-    setClockHost(hostAddr: string): void {
+    public setClockHost(hostAddr: string): void {
         this.clockHost = hostAddr;
         this.saveToFile('config.json');
     }
 
-    setControllerHost(hostAddr: string): void {
+    public setClockMode(clockMode: string): void {
+        this.clockMode = clockMode;
+        this.saveToFile('config.json');
+        if(clockMode === "Controller mode"){
+            clockService.manualMode();
+        }
+        if(clockMode === "Time mode"){
+            clockService.timeMode();
+        }
+    }
+
+    public setControllerHost(hostAddr: string): void {
         this.controlDeviceHost = hostAddr;
         this.saveToFile('config.json');
     }
 
-    setControlDevice(controlDevice: string): void {
+    public setControlDevice(controlDevice: string): void {
         this.controlDevice = controlDevice;
         this.saveToFile('config.json');
     }
 
-    setControllerInput(controllerInput: string): void {
+    public setControllerInput(controllerInput: string): void {
         this.controllerInput = controllerInput;
         this.saveToFile('config.json');
     }
 
-    setTimecodeMode(timecodeMode: string): void {
+    public setTimecodeMode(timecodeMode: string): void {
         this.timecodeMode = timecodeMode;
         this.saveToFile('config.json');
     }
