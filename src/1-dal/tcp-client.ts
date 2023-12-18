@@ -19,7 +19,9 @@ class TcpClient {
         }
     
         // Create a new connection
-        this.client = net.createConnection({ host: appConfig.controlDeviceHost, port: 8099 }, () => {});
+        this.client = net.createConnection({ host: appConfig.controlDeviceHost, port: 8099 }, () => {
+            console.log('vMix woke up and smelled the coffee!');
+        });
     
         // Handle close event during reconnection
         this.client.once('close', () => {});
