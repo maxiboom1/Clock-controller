@@ -15,7 +15,7 @@ class TcpClient {
   
     }
 
-    sendAndReceiveData(dataToSend: string) {
+    async sendAndReceiveData(dataToSend: string):Promise<string> {
         return new Promise((resolve, reject) => {
             this.client.write(dataToSend);
 

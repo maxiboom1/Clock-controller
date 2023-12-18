@@ -46,8 +46,8 @@ router.post("/set-controller", (request: Request, response: Response, next: Next
 
 // GET http://localhost:4001/api/status 
 router.get('/status', async(req: Request, res: Response) => {
-    const status = await clockService.getClockStatus();
-    res.status(201).json(status);
+    const result = await appConfig.getConfig();
+    res.status(201).json(result);
 });
 
 //TRICASTER EMULATOR - GET http://localhost:4001/api/tricaster

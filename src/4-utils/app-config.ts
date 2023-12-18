@@ -41,7 +41,6 @@ class AppConfig {
             const data = fs.readFileSync(filename, 'utf-8');
             const config = JSON.parse(data);
             Object.assign(this, config);
-            console.log(config);
         } catch (error) {
             // Handle file read error or JSON parse error
             console.error('Error loading config file:', error.message);
@@ -51,6 +50,16 @@ class AppConfig {
     private saveToFile(filename: string): void {
         const data = JSON.stringify(this, null, 2);
         fs.writeFileSync(filename, data, 'utf-8');
+    }
+
+    public getConfig() {
+        try {
+            const data = fs.readFileSync("config.json", 'utf-8');
+            const config = JSON.parse(data);
+            return config;
+        } catch (error) {
+            console.error('Error loading config file:', error.message);
+        }
     }
 }
 

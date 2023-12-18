@@ -66,4 +66,43 @@ function postData(route, data) {
     fetch(url, { method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSON.stringify(data),})
       .then(response => { if (!response.ok) {throw new Error(`HTTP error! Status: ${response.status}`);} })
       .catch(error => {console.error('Error:', error);});
-  }
+}
+
+async function getData(route) {
+    const host = window.location.host;
+    const url = `http://${host}${route}`;
+
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        throw error;
+    });
+}
+
+getData('/api/status')
+    .then(responseData => {
+        console.log(responseData);
+        document.getElementById("clockHost").value = responseData.clockHost;
+        document.getElementById("controllerHost").value = responseData.controlDeviceHost;
+        
+        const controllerTypeEl = document.getElementById('controllerType');
+        const controllerTypeOption = Array.from(controllerTypeEl.options).find(option => option.textContent === responseData.controlDevice);
+        if (controllerTypeOption) {controllerTypeOption.selected = true;}
+
+    })  
+    .catch(error => {
+        // Handle the error
+    });
+
+

@@ -6,20 +6,15 @@ async function getVmixTimecode(): Promise<string> {
     try {
         const input = appConfig.controllerInput
 
-        const dataToSend = `XMLTEXT vmix/inputs/input[${input}]/@position\r\n`;
-        
-        const response = await tcpClient.sendAndReceiveData(dataToSend);
+        const positionQuery = `XMLTEXT vmix/inputs/input[${input}]/@position\r\n`;
+        const durationQuery = `XMLTEXT vmix/inputs/input[${input}]/@duration\r\n`;
+        const positionData = await tcpClient.sendAndReceiveData(positionQuery);
+        const durationData = await tcpClient.sendAndReceiveData(durationQuery);
+        const position = Math.floor( Number(positionData.split(" ")[2]) / 1000);
+        const duration = Math.floor( Number(durationData.split(" ")[2]) / 1000);
+        const remaining = duration - position; 
 
-        // Explicitly cast response to a string
-        const responseStr = response as string;
-
-        // Split the response by spaces
-        const responseArr = responseStr.split(" ");
-        
-        // @ts-ignore
-        const seconds = Math.floor(Number(responseArr[2]) / 1000);
-
-        const timecodeHMS = timeConvertors.secondsToHMS(seconds);        
+        const timecodeHMS = timeConvertors.secondsToHMS(remaining);        
 
         return timecodeHMS;
 
