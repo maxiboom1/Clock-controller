@@ -4,7 +4,7 @@
   "controlDevice": "vMix",
   "controlDeviceHost": "localhost",
   "timecodeMode": "remaining",
-  "controllerInput": "1",
+  "controllerInput": "2",
   "requestTimeout": 1000,
   "webServicePort": 4001,
   "tricasterTimecodeURL": "http://127.0.0.1/v1/dictionary?key=ddr_timecode",

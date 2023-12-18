@@ -10,8 +10,8 @@ async function getVmixTimecode(): Promise<string> {
         const durationQuery = `XMLTEXT vmix/inputs/input[${input}]/@duration\r\n`;
         const positionData = await tcpClient.sendAndReceiveData(positionQuery);
         const durationData = await tcpClient.sendAndReceiveData(durationQuery);
-        const position = Math.floor( Number(positionData.split(" ")[2]) / 1000);
-        const duration = Math.floor( Number(durationData.split(" ")[2]) / 1000);
+        const position = Math.round( Number(positionData.split(" ")[2]) / 1000);
+        const duration = Math.round( Number(durationData.split(" ")[2]) / 1000);
         const remaining = duration - position; 
         if(appConfig.timecodeMode === "remaining"){
             return timeConvertors.secondsToHMS(remaining);
