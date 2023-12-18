@@ -1,0 +1,11 @@
+{
+  "clockPort": 7372,
+  "clockHost": "192.168.0.115",
+  "controlDevice": "vMix",
+  "controlDeviceHost": "localhost",
+  "controllerInput": "2",
+  "requestTimeout": 1000,
+  "webServicePort": 4001,
+  "tricasterTimecodeURL": "http://127.0.0.1/v1/dictionary?key=ddr_timecode",
+  "tricasterEmulatorURL": "http://localhost:4001/api/tricaster"
+}

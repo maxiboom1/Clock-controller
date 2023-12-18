@@ -23,12 +23,22 @@ router.post("/set-manual-mode", (request: Request, response: Response, next: Nex
     }
 });
 
-// POST http://localhost:4001/api/clock-config
-router.post("/set-clock-config", (request: Request, response: Response, next: NextFunction) => {
+// POST http://localhost:4001/api/set-clock
+router.post("/set-clock", (request: Request, response: Response, next: NextFunction) => {
     try {
         appConfig.setClockHost(request.body.clockHost);
         
-        
+    } catch (err: any) {
+        next(err);
+    }
+});
+
+// POST http://localhost:4001/api/set-controller {controllerHost: 'localhost',controllerType: 'Tricaster',controllerInput: 'DDR3'}
+router.post("/set-controller", (request: Request, response: Response, next: NextFunction) => {
+    try {
+        appConfig.setControllerHost(request.body.controllerHost);
+        appConfig.setControlDevice(request.body.controllerType);
+        appConfig.setControllerInput(request.body.controllerInput);
     } catch (err: any) {
         next(err);
     }

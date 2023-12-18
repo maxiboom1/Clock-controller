@@ -2,8 +2,7 @@ var myTabs = new bootstrap.Tab(document.getElementById('clockConfigTab'));
 myTabs.show();
 
 function handleControllerChange(){
-    const controllerMode = document.getElementById('controllerMode').value;
-    console.log(controllerMode)
+    const controllerMode = document.getElementById('controllerType').value;
     if(controllerMode === "1"){
         document.getElementById('tricasterContainer').style.display = 'none';
         document.getElementById('vmixContainer').style.display = 'block';
@@ -24,10 +23,41 @@ function setClockConfig(){
         clockMode: selectedOption.textContent
     }
     
-    postData("/api/set-clock-config", clockConfig);
+    postData("/api/set-clock", clockConfig);
 
 }
 
+function setControllerConfig(){
+    
+    const controllerHost = document.getElementById("controllerHost");
+    
+    const controllerType = document.getElementById("controllerType");
+    const selectedValue = controllerType.value;
+    const selectedOption = Array.from(controllerType.options).find(option => option.value === selectedValue);
+    
+    let controllerInput = "";
+
+    switch (selectedOption.textContent) {
+        case 'vMix':
+            const vmixInput = document.getElementById("vmixInput");
+            controllerInput = Array.from(vmixInput.options).find(option => option.value === vmixInput.value).innerText;
+            break;
+        case 'Tricaster':
+            const tricasterInput = document.getElementById("tricasterDDR");
+            controllerInput = Array.from(tricasterInput.options).find(option => option.value === tricasterInput.value).innerText;
+            break;
+        default:
+            console.log(`Sorry, no controller selected`);
+        }
+          
+    const controllerConfig={
+        controllerHost: controllerHost.value,
+        controllerType:selectedOption.textContent,
+        controllerInput: controllerInput
+    }
+    postData("/api/set-controller", controllerConfig);
+
+}
 
 function postData(route, data) {
     const host = window.location.host;
