@@ -60,7 +60,6 @@ function setControllerConfig(){
         controllerInput: controllerInput,
         controllerTcMode: tcModeOptions.textContent
     }
-    console.log(controllerConfig);
     postData("/api/set-controller", controllerConfig);
 
 }
@@ -68,7 +67,6 @@ function setControllerConfig(){
 function postData(route, data) {
     const host = window.location.host;
     const url = `http://${host}${route}`;
-  
     fetch(url, { method: 'POST', headers: {'Content-Type': 'application/json',}, body: JSON.stringify(data),})
       .then(response => { if (!response.ok) {throw new Error(`HTTP error! Status: ${response.status}`);} })
       .catch(error => {console.error('Error:', error);});
@@ -98,7 +96,7 @@ async function getData(route) {
 
 getData('/api/status')
     .then(responseData => {
-        console.log(responseData);
+        console.log("Got from server: ", responseData);
         document.getElementById("clockHost").value = responseData.clockHost;
         document.getElementById("controllerHost").value = responseData.controlDeviceHost;
         
@@ -109,6 +107,6 @@ getData('/api/status')
     })  
     .catch(error => {
         // Handle the error
-    });
+});
 
 
