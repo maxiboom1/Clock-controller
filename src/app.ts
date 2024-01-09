@@ -6,11 +6,11 @@ import appConfig from "./4-utils/app-config";
 import clockService from "./5-services/clock-service";
 import path from "path";
 
-//  Web server
+// Web server
 const server = express();
 server.use(express.json());
 
-// Web UI 
+// Web UI
 server.use(express.static(path.join(__dirname, '..', 'web-page')));
 server.get('/config', (req, res) => {
     const configFilePath = path.join(__dirname, '..', 'web-page', 'index.html');
