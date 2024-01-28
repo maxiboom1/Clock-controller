@@ -6,7 +6,7 @@ const { parseString } = require('xml2js');
 async function getTricasterTimecode() {
   const ddr = "ddr2";
   try {
-    const response = await axios.get(appConfig.tricasterEmulatorURL);
+    const response = await axios.get(appConfig.tricasterTimecodeURL);
     const xml = response.data;
     let jsonData: any;
     parseString(xml, { explicitArray: false }, (err, result) => {
@@ -20,8 +20,7 @@ async function getTricasterTimecode() {
     return tricasterHMS;
 
   } catch (error) {
-    console.error('Error fetching data:', error.message);
-    throw error;
+    console.error('Error fetching data from Tricaster:', error.message);
   }
 }
 
