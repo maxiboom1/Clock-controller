@@ -5,7 +5,7 @@
   "controlDevice": "Tricaster",
   "controlDeviceHost": "127.0.0.1",
   "timecodeMode": "remaining",
-  "controllerInput": "DDR2",
+  "controllerInput": "DDR4",
   "requestTimeout": 1000,
   "webServicePort": 4001,
   "tricasterTimecodeURL": "http://127.0.0.1/v1/dictionary?key=ddr_timecode",
