@@ -20,7 +20,6 @@ class AppConfig {
     constructor() {
         // Load initial values from a file (if the file exists)
         this.loadFromFile(configPath);
-        console.log(this);
     }
 
     public setClockHost(hostAddr: string): void {
