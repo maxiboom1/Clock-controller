@@ -20,11 +20,20 @@ server.get('/config', (req, res) => {
 server.use("/api", dataRoutes);
 server.use(routeNotFound);
 server.use(catchAll);
-server.listen(appConfig.webServicePort, () => {
+server.listen(appConfig.webServicePort, async () => {
     console.log("Listening on http://localhost:" + appConfig.webServicePort);
     console.log("Config webpage available on http://localhost:" + appConfig.webServicePort + '/config');
+    // Automatically open the web config page in the default browser using dynamic import
+    try {
+        const open = await import('open');
+        open.default("http://localhost:" + appConfig.webServicePort + '/config');
+    } catch (error) {
+        console.error('Failed to open the config page:', error);
+    }
+
     }
 );
+
 
 
 clockService.manualMode();

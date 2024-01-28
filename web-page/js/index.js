@@ -99,7 +99,6 @@ getData('/api/status')
         console.log("Got from server: ", responseData);
         document.getElementById("clockHost").value = responseData.clockHost;
         document.getElementById("controllerHost").value = responseData.controlDeviceHost;
-        
         const controllerTypeEl = document.getElementById('controllerType');
         const controllerTypeOption = Array.from(controllerTypeEl.options).find(option => option.textContent === responseData.controlDevice);
         if (controllerTypeOption) {controllerTypeOption.selected = true;}
