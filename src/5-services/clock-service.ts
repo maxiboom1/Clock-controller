@@ -22,7 +22,9 @@ async function manualMode(): Promise<void> {
       switch(appConfig.controlDevice){
         case "Tricaster": 
           const tricasterHMS = await tricasterService.getTricasterTimecode(); // Returns HHMMSS
-          await sendHMSToClock(tricasterHMS);
+          if(tricasterHMS !== undefined){
+            await sendHMSToClock(tricasterHMS);
+          }
           break;
         case "vMix":
           const vmixHMS = await getVmixTimecode(); // Return HHMMSS

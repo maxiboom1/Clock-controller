@@ -1,5 +1,8 @@
 import * as fs from 'fs';
 import clockService from '../5-services/clock-service';
+import path from 'path';
+
+const configPath = path.join(process.cwd(), 'config.json');
 
 class AppConfig {
     clockPort = 7372;
@@ -16,17 +19,17 @@ class AppConfig {
 
     constructor() {
         // Load initial values from a file (if the file exists)
-        this.loadFromFile('config.json');
+        this.loadFromFile(configPath);
     }
 
     public setClockHost(hostAddr: string): void {
         this.clockHost = hostAddr;
-        this.saveToFile('config.json');
+        this.saveToFile(configPath);
     }
 
     public setClockMode(clockMode: string): void {
         this.clockMode = clockMode;
-        this.saveToFile('config.json');
+        this.saveToFile(configPath);
         if(clockMode === "Controller mode"){
             clockService.manualMode();
         }
@@ -37,22 +40,22 @@ class AppConfig {
 
     public setControllerHost(hostAddr: string): void {
         this.controlDeviceHost = hostAddr;
-        this.saveToFile('config.json');
+        this.saveToFile(configPath);
     }
 
     public setControlDevice(controlDevice: string): void {
         this.controlDevice = controlDevice;
-        this.saveToFile('config.json');
+        this.saveToFile(configPath);
     }
 
     public setControllerInput(controllerInput: string): void {
         this.controllerInput = controllerInput;
-        this.saveToFile('config.json');
+        this.saveToFile(configPath);
     }
 
     public setTimecodeMode(timecodeMode: string): void {
         this.timecodeMode = timecodeMode;
-        this.saveToFile('config.json');
+        this.saveToFile(configPath);
     }
 
     private loadFromFile(filename: string): void {
@@ -73,7 +76,7 @@ class AppConfig {
 
     public getConfig() {
         try {
-            const data = fs.readFileSync("config.json", 'utf-8');
+            const data = fs.readFileSync(configPath, 'utf-8');
             const config = JSON.parse(data);
             return config;
         } catch (error) {

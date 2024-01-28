@@ -100,13 +100,55 @@ getData('/api/status')
         document.getElementById("clockHost").value = responseData.clockHost;
         document.getElementById("controllerHost").value = responseData.controlDeviceHost;
         
+        // Set the Clock Mode
+        const clockModeEl = document.getElementById('clockMode');
+        Array.from(clockModeEl.options).forEach(option => {
+            if (option.textContent === responseData.clockMode) {
+                option.selected = true;
+            }
+        });
+
+        // Set the Controller Type and Input
         const controllerTypeEl = document.getElementById('controllerType');
-        const controllerTypeOption = Array.from(controllerTypeEl.options).find(option => option.textContent === responseData.controlDevice);
-        if (controllerTypeOption) {controllerTypeOption.selected = true;}
+        Array.from(controllerTypeEl.options).forEach(option => {
+            if (option.textContent === responseData.controlDevice) {
+                option.selected = true;
+            }
+        });
+
+        // Update the display based on the selected controller
         handleControllerChange();
+
+        // Wait for the controller type to properly set, then update input and DDR
+        setTimeout(() => {
+            if (responseData.controlDevice === 'vMix') {
+                const vmixInputEl = document.getElementById('vmixInput');
+                Array.from(vmixInputEl.options).forEach(option => {
+                    if (option.textContent === responseData.controllerInput) {
+                        option.selected = true;
+                    }
+                });
+            } else if (responseData.controlDevice === 'Tricaster') {
+                const tricasterDDREl = document.getElementById('tricasterDDR');
+                Array.from(tricasterDDREl.options).forEach(option => {
+                    if (option.textContent === responseData.controllerInput) {
+                        option.selected = true;
+                    }
+                });
+            }
+
+            // Set the Timecode Mode
+            const tcModeEl = document.getElementById('tcMode');
+            Array.from(tcModeEl.options).forEach(option => {
+                if (option.textContent === responseData.timecodeMode) {
+                    option.selected = true;
+                }
+            });
+        }, 100); // Timeout to ensure DOM updates have occurred
     })  
     .catch(error => {
-        // Handle the error
+        console.error('Error:', error);
 });
+
 
 
