@@ -1,13 +1,13 @@
 {
   "clockPort": 7372,
-  "clockHost": "192.168.0.133",
+  "clockHost": "192.168.0.112",
+  "clock2Host": "192.168.0.118",
+  "clock2Enabled": true,
   "clockMode": "Controller mode",
-  "controlDevice": "Tricaster",
+  "controlDevice": "vMix",
   "controlDeviceHost": "127.0.0.1",
   "timecodeMode": "remaining",
-  "controllerInput": "DDR4",
+  "controllerInput": "1",
   "requestTimeout": 1000,
-  "webServicePort": 4001,
-  "tricasterTimecodeURL": "http://127.0.0.1/v1/dictionary?key=ddr_timecode",
-  "tricasterEmulatorURL": "http://localhost:4001/api/tricaster"
+  "webServicePort": 4001
 }

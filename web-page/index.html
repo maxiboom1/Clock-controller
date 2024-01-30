@@ -25,34 +25,61 @@
         <div class="tab-content px-5 mt-2">
             
             <!-- Clock tab -->
-            <div class="tab-pane fade show p-4 active" id="clockConfigContent">
-                
-                <!-- Form with clock host and mode -->
-                <div class="row g-2">
-                    <div class="col">
-                        <span>Clock host</span>
+            <div class="tab-pane fade show p-4 active" id="clockConfigContent">  
+                <form id="clockConfigForm" novalidate>
+                    
+                    <!-- clock host and mode fields -->
+                    <div class="row g-2">
+                        
+                        <div class="col">
+                            <span>Clock host</span>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="clockHost" pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$" placeholder="Clock IP Address" required>
+                                <label for="clockHost">Clock IP address</label>
+                            </div>
+                        </div>
+                        
+                        <div class="col">
+                            <span>Clock-2 host</span>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="clock2Host" pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$" placeholder="Clock2 IP Address" disabled>
+                                <label for="clock2Host">Clock2 IP address</label>
+                            </div>
+                        </div>
 
-                        <div class="form-floating">
-                            <input type="email" class="form-control" id="clockHost">
-                            <label for="floatingInputGrid">Clock ip address</label>
+                        <div class="col">
+                            <span>Clock mode</span>
+                            <div class="form-floating ">
+                                <select class="form-select" id="clockMode" required>
+                                    <option value="" selected>Select..</option>
+                                    <option value="1">Time mode</option>
+                                    <option value="2">Controller mode</option>
+                                </select>
+                                <label for="floatingSelectGrid">Set clock mode</label>
+                                <div class="invalid-feedback">
+                                    Please select a clock mode.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <!-- enableClock2 checkbox -->
+                    <div class="row g-2">
+                        <div class="col-4"></div>
+                        <div class="col">
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="enableClock2">
+                                <label class="form-check-label" for="enableClock2">
+                                    Turn on Clock-2
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="col">
-                        <span>Clock mode</span>
 
-                        <div class="form-floating ">
-                            <select class="form-select" id="clockMode">
-                                <option selected>Select..</option>
-                                <option value="1">Time mode</option>
-                                <option value="2">Controller mode</option>
-                            </select>
-                            <label for="floatingSelectGrid">Set clock mode</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <button type="button" onclick="setClockConfig()" class="btn btn-primary btn-lg mx-auto d-block mt-5" style="width: 300px;">SET</button>
-
+                    
+                    <button type="submit" class="btn btn-primary btn-lg mx-auto d-block mt-5" style="width: 300px;">SET</button>
+                </form>
             </div>
             
             <!-- Controller tab -->

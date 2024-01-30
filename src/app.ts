@@ -26,7 +26,7 @@ server.listen(appConfig.webServicePort, async () => {
     // Automatically open the web config page in the default browser using dynamic import
     try {
         const open = await import('open');
-        open.default("http://localhost:" + appConfig.webServicePort + '/config');
+        //open.default("http://localhost:" + appConfig.webServicePort + '/config');
     } catch (error) {
         console.error('Failed to open the config page:', error);
     }

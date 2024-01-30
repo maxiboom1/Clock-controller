@@ -1,12 +1,17 @@
 import * as fs from 'fs';
-import clockService from '../5-services/clock-service';
 import path from 'path';
+
+// Set this to "true" to hardcode controller host IP for security reasons, otherwise, set to "false".
+const securityMode = false;
+const controlDeviceHardcodedAddr = "10.232.41.205";
 
 const configPath = path.join(process.cwd(), 'config.json');
 
 class AppConfig {
     clockPort = 7372;
     clockHost = '192.168.0.132';
+    clock2Host = '192.168.0.23';
+    clock2Enabled = false;
     clockMode = "Time mode";
     controlDevice = "tricaster";
     controlDeviceHost = "127.0.0.1";
@@ -14,48 +19,10 @@ class AppConfig {
     controllerInput = "1";
     requestTimeout = 1000;
     webServicePort = 4001;
-    tricasterTimecodeURL = `http://${this.controlDeviceHost}/v1/dictionary?key=ddr_timecode`;
-    tricasterEmulatorURL = `http://localhost:4001/api/tricaster`;
 
     constructor() {
         // Load initial values from a file (if the file exists)
         this.loadFromFile(configPath);
-    }
-
-    public setClockHost(hostAddr: string): void {
-        this.clockHost = hostAddr;
-        this.saveToFile(configPath);
-    }
-
-    public setClockMode(clockMode: string): void {
-        this.clockMode = clockMode;
-        this.saveToFile(configPath);
-        if(clockMode === "Controller mode"){
-            clockService.manualMode();
-        }
-        if(clockMode === "Time mode"){
-            clockService.timeMode();
-        }
-    }
-
-    public setControllerHost(hostAddr: string): void {
-        this.controlDeviceHost = hostAddr;
-        this.saveToFile(configPath);
-    }
-
-    public setControlDevice(controlDevice: string): void {
-        this.controlDevice = controlDevice;
-        this.saveToFile(configPath);
-    }
-
-    public setControllerInput(controllerInput: string): void {
-        this.controllerInput = controllerInput;
-        this.saveToFile(configPath);
-    }
-
-    public setTimecodeMode(timecodeMode: string): void {
-        this.timecodeMode = timecodeMode;
-        this.saveToFile(configPath);
     }
 
     private loadFromFile(filename: string): void {
@@ -63,8 +30,14 @@ class AppConfig {
             const data = fs.readFileSync(filename, 'utf-8');
             const config = JSON.parse(data);
             Object.assign(this, config);
+            
+            // Hardcoded IP for security
+            if (securityMode) {
+                this.controlDeviceHost = controlDeviceHardcodedAddr;
+                this.securityMessage();
+            } 
+
         } catch (error) {
-            // Handle file read error or JSON parse error
             console.error('Error loading config file:', error.message);
         }
     }
@@ -76,12 +49,33 @@ class AppConfig {
 
     public getConfig() {
         try {
-            const data = fs.readFileSync(configPath, 'utf-8');
-            const config = JSON.parse(data);
-            return config;
+            return this;
         } catch (error) {
             console.error('Error loading config file:', error.message);
         }
+    }
+
+    public setConfig(config: {}){
+        
+        // Prevent changing controlDeviceHost in security mode
+        if (securityMode && config.hasOwnProperty('controlDeviceHost')) {
+            if(config['controlDeviceHost'] !== this.controlDeviceHost){
+                this.securityMessage();
+                delete config['controlDeviceHost']; 
+            }
+        };
+
+        Object.assign(this, config);
+        this.saveToFile(configPath);
+    }
+
+    get tricasterTimecodeURL() {
+        const tcHost = securityMode ? controlDeviceHardcodedAddr : this.controlDeviceHost;
+        return `http://${tcHost}/v1/dictionary?key=ddr_timecode`;
+    }
+
+    private securityMessage(){
+        console.error('License service: Now allowed to change controller IP address. It will remain ' + controlDeviceHardcodedAddr);
     }
 }
 

@@ -1,12 +1,11 @@
-// Test branch
-
 import axios from "axios";
 import appConfig from "../4-utils/app-config";
 import timeConvertors from "../4-utils/timeConvertors";
 const { parseString } = require('xml2js');
 
 async function getTricasterTimecode() {
-  const ddr = "ddr2";
+  const ddr = appConfig.controllerInput.toLowerCase();
+  
   try {
     const response = await axios.get(appConfig.tricasterTimecodeURL);
     const xml = response.data;
@@ -17,12 +16,11 @@ async function getTricasterTimecode() {
     });
 
     const clipSecondsRemaining = Math.floor(jsonData.timecode[ddr]['$'].clip_seconds_remaining);
-
     const tricasterHMS = timeConvertors.secondsToHMS(clipSecondsRemaining);
     return tricasterHMS;
 
   } catch (error) {
-    console.error('Error fetching data from Tricaster:', error.message);
+    console.error(`Error fetching data from Tricaster:`, error.message);
   }
 }
 
