@@ -21,7 +21,6 @@ server.use("/api", dataRoutes);
 server.use(routeNotFound);
 server.use(catchAll);
 server.listen(appConfig.webServicePort, async () => {
-    console.log("Listening on http://localhost:" + appConfig.webServicePort);
     console.log("Config webpage available on http://localhost:" + appConfig.webServicePort + '/config');
     // Automatically open the web config page in the default browser using dynamic import
     try {
