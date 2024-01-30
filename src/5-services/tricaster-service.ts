@@ -5,7 +5,7 @@ const { parseString } = require('xml2js');
 
 async function getTricasterTimecode() {
   const ddr = appConfig.controllerInput.toLowerCase();
-  
+  const tcMode = appConfig.timecodeMode;
   try {
     const response = await axios.get(appConfig.tricasterTimecodeURL);
     const xml = response.data;
@@ -14,10 +14,17 @@ async function getTricasterTimecode() {
         if (err) {throw new Error(err);}
         jsonData = result;
     });
+    if(tcMode === "remaining"){
+      const clipSecondsRemaining = Math.floor(jsonData.timecode[ddr]['$'].clip_seconds_remaining);
+      const tricasterHMS = timeConvertors.secondsToHMS(clipSecondsRemaining);
+      return tricasterHMS;
+    }
+    if(tcMode === "position"){
+      const clipSecondsElapsed = Math.floor(jsonData.timecode[ddr]['$'].clip_seconds_elapsed);
+      const tricasterHMS = timeConvertors.secondsToHMS(clipSecondsElapsed);
+      return tricasterHMS;
+    }
 
-    const clipSecondsRemaining = Math.floor(jsonData.timecode[ddr]['$'].clip_seconds_remaining);
-    const tricasterHMS = timeConvertors.secondsToHMS(clipSecondsRemaining);
-    return tricasterHMS;
 
   } catch (error) {
     console.error(`Error fetching data from Tricaster:`, error.message);
@@ -28,3 +35,14 @@ async function getTricasterTimecode() {
 export default {
   getTricasterTimecode
 };
+
+
+/*
+<timecode>
+<ddr4 clip_seconds_elapsed="0" clip_seconds_remaining="25.992633" clip_embedded_timecode="0" clip_in="0" clip_out="25.992633" file_duration="26.026" play_speed="1" clip_framerate="29.97003" playlist_seconds_elapsed="0" playlist_seconds_remaining="25.992633" preset_index="0" clip_index="0" num_clips="1"/>
+<ddr2 clip_seconds_elapsed="0" clip_seconds_remaining="59.977347" clip_embedded_timecode="0" clip_in="0" clip_out="59.977347" file_duration="120.053267" play_speed="1" clip_framerate="29.97003" playlist_seconds_elapsed="0" playlist_seconds_remaining="59.993267" preset_index="0" clip_index="0" num_clips="4"/>
+<sound clip_seconds_elapsed="0" clip_seconds_remaining="268.4068" clip_embedded_timecode="0" clip_in="0" clip_out="268.4068" file_duration="268.4068" play_speed="1" clip_framerate="25" playlist_seconds_elapsed="0" playlist_seconds_remaining="268.401467" preset_index="0" clip_index="0" num_clips="1"/>
+<ddr3 clip_seconds_elapsed="0" clip_seconds_remaining="1.968633" clip_embedded_timecode="0" clip_in="0" clip_out="1.968633" file_duration="1.968633" play_speed="1" clip_framerate="29.97003" playlist_seconds_elapsed="0" playlist_seconds_remaining="1.935267" preset_index="0" clip_index="0" num_clips="1"/>
+<ddr1 clip_seconds_elapsed="0" clip_seconds_remaining="3.486309" clip_embedded_timecode="0" clip_in="0" clip_out="3.486309" file_duration="234.801233" play_speed="1" clip_framerate="29.97003" playlist_seconds_elapsed="0" playlist_seconds_remaining="3.470133" preset_index="2" clip_index="1" num_clips="3"/>
+</timecode>
+*/
