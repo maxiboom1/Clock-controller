@@ -49,12 +49,11 @@ class UDPClient {
   }
 
   private sendMessage(message: Buffer, port: number, address: string) {
-    const x = this.socket.send(message, port, address, (error) => {
+    this.socket.send(message, port, address, (error) => {
       if (error) {
         console.error(`Error sending data to ${address}:`, error);
       }
     });
-    console.log('sent msg to ' + address);
   }
 }
 
