@@ -33,8 +33,10 @@ class AppConfig {
             
             // Hardcoded IP for security
             if (securityMode) {
-                this.controlDeviceHost = controlDeviceHardcodedAddr;
-                this.securityMessage();
+                if(config.controlDeviceHost !== controlDeviceHardcodedAddr){
+                    this.controlDeviceHost = controlDeviceHardcodedAddr;
+                    this.securityMessage();
+                }
             } 
 
         } catch (error) {
