@@ -1,12 +1,14 @@
 import express, { Request, Response, NextFunction } from "express";
 import appConfig from "../4-utils/app-config";
+import configService from "../5-services/config-service";
 const router = express.Router();
 
 // POST http://localhost:4001/api/set-controller {controllerHost: 'localhost',controllerType: 'Tricaster',controllerInput: 'DDR3'}
 router.post("/set-config", (request: Request, response: Response, next: NextFunction) => {
-    console.log("set-controller", request.body);
+    console.log("set-config", request.body);
     try {
-        appConfig.setConfig(request.body);
+        configService.processConfigData(request.body);
+        
     } catch (err: any) {
         next(err);
     }

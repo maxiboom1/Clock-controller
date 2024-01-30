@@ -10,7 +10,10 @@ let resendInterval: NodeJS.Timeout | null = null;
 
 function timeMode(): void {
     if (resendInterval) {clearInterval(resendInterval);resendInterval = null;}
-    udpClient.send(Buffer.from(ClockOperation.SetTimeMode));
+    udpClient.send(Buffer.from(ClockOperation.SetTimeMode), appConfig.clockHost);
+    if(appConfig.clock2Enabled){
+      udpClient.send(Buffer.from(ClockOperation.SetTimeMode), appConfig.clock2Host);
+    }
 }
 
 async function manualMode(): Promise<void> {
@@ -51,7 +54,10 @@ async function getClockStatus(){
 // Got HH:MM:SS string, converts it to byte array, and sends to clock. Example: 10:52:20
 async function sendHMSToClock(HHMMSS:string): Promise<void> {
   try {
-    await udpClient.send(timeConvertors.timeStringToBytes(HHMMSS));
+    await udpClient.send(timeConvertors.timeStringToBytes(HHMMSS), appConfig.clockHost);
+    if(appConfig.clock2Enabled){
+      await udpClient.send(timeConvertors.timeStringToBytes(HHMMSS), appConfig.clock2Host);
+    }
   } catch (error) {
     console.log(error);
   }
@@ -60,7 +66,10 @@ async function sendHMSToClock(HHMMSS:string): Promise<void> {
 // Got num array, converts it to buffer and sends to clock. Example: [165, 1, 0]
 async function sendBufferToClock(byteArr: number[]): Promise<Buffer> {
   try {
-    const result = await udpClient.send(Buffer.from(byteArr));
+    const result = await udpClient.send(Buffer.from(byteArr), appConfig.clockHost);
+    if(appConfig.clock2Enabled){
+      udpClient.send(Buffer.from(byteArr), appConfig.clock2Host);
+    }
     return result;
   } catch (error) {
     console.log(error);

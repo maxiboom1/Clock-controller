@@ -3,8 +3,8 @@ import dataRoutes from "./6-routes/data-routes";
 import routeNotFound from "./3-middleware/route-not-found";
 import catchAll from "./3-middleware/catch-all";
 import appConfig from "./4-utils/app-config";
-import clockService from "./5-services/clock-service";
 import path from "path";
+import configService from "./5-services/config-service";
 
 // Web server
 const server = express();
@@ -25,7 +25,7 @@ server.listen(appConfig.webServicePort, async () => {
     // Automatically open the web config page in the default browser using dynamic import
     try {
         const open = await import('open');
-        open.default("http://localhost:" + appConfig.webServicePort + '/config');
+        //open.default("http://localhost:" + appConfig.webServicePort + '/config');
     } catch (error) {
         console.error('Failed to open the config page:', error);
     }
@@ -33,6 +33,4 @@ server.listen(appConfig.webServicePort, async () => {
     }
 );
 
-
-
-clockService.manualMode();
+configService.processConfigData(appConfig);

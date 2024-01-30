@@ -11,7 +11,7 @@ class UDPClient {
     this.cleanupListeners = () => {}; // Initialization
   }
 
-  public send(queryMessage: Buffer): Promise<Buffer> {
+  public send(queryMessage: Buffer,clockAddr:string): Promise<Buffer> {
     return new Promise<Buffer>((resolve, reject) => {
       const onResponse = (msg: Buffer) => {
         // Unsubscribe from listening for responses
@@ -30,12 +30,8 @@ class UDPClient {
       }, appConfig.requestTimeout);
 
       // Send the query message
-      this.sendMessage(queryMessage, appConfig.clockPort, appConfig.clockHost);
+      this.sendMessage(queryMessage, appConfig.clockPort, clockAddr);
       
-      // Send the same message to clock2, if enabled
-      if(appConfig.clock2Enabled){
-        this.sendMessage(queryMessage, appConfig.clockPort, appConfig.clock2Host);
-      }
       // Cleanup listeners function
       this.cleanupListeners = () => {
         clearTimeout(timeoutId);

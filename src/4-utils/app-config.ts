@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import path from 'path';
 
 // Set this to "true" to hardcode controller host IP for security reasons, otherwise, set to "false".
-const securityMode = true;
+const securityMode = false;
 const controlDeviceHardcodedAddr = "10.232.41.205";
 
 const configPath = path.join(process.cwd(), 'config.json');
@@ -37,7 +37,7 @@ class AppConfig {
                     this.controlDeviceHost = controlDeviceHardcodedAddr;
                     this.securityMessage();
                 }
-            } 
+            }
 
         } catch (error) {
             console.error('Error loading config file:', error.message);
