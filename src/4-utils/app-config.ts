@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import path from 'path';
 
 // Set this to "true" to hardcode controller host IP for security reasons, otherwise, set to "false".
-const securityMode = false;
+const securityMode = true;
 const controlDeviceHardcodedAddr = "10.232.41.205";
 
 const configPath = path.join(process.cwd(), 'config.json');
