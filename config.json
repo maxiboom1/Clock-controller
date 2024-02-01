@@ -1,11 +1,11 @@
 {
   "clockPort": 7372,
-  "clockHost": "192.168.0.132",
+  "clockHost": "192.168.0.118",
   "clock2Host": "192.168.0.12",
   "clock2Enabled": false,
   "clockMode": "Controller mode",
   "controlDevice": "vMix",
-  "controlDeviceHost": "192.168.52.3",
+  "controlDeviceHost": "127.0.0.1",
   "timecodeMode": "remaining",
   "controllerInput": "1",
   "webServicePort": 4001

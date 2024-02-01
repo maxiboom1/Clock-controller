@@ -28,7 +28,7 @@ server.listen(appConfig.webServicePort, async () => {
         const open = await import('open');
         //if(!appConfig.debugMode){open.default("http://localhost:" + appConfig.webServicePort + '/config');}
         console.log("Debug mode:" + appConfig.debugMode);
-        //configService.processConfigData(appConfig);
+        configService.processConfigData(appConfig);
     } catch (error) {
         console.error('Failed to open the config page:', error);
     }
@@ -36,4 +36,3 @@ server.listen(appConfig.webServicePort, async () => {
     }
 );
 
-getVmixTimecode();

@@ -64,15 +64,11 @@ import appConfig from "../4-utils/app-config";
 
 class UDPClient {
   private socket: Socket;
-  private count: number;
   constructor() {
     this.socket = dgram.createSocket("udp4");
-    this.count = 0;
   }
 
   public send(queryMessage: Buffer, clockAddr: string): void {
-    this.count++;
-    console.log(this.count, clockAddr);
 
     this.socket.send(queryMessage, 0, queryMessage.length, appConfig.clockPort, clockAddr, (error) => {
       if (error) {console.error(`Error sending data to ${clockAddr}:`, error);} 

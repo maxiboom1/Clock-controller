@@ -10,7 +10,7 @@ const securityMode = false;
 const controlDeviceHardcodedAddr = "10.232.41.205";
 
 // In debug mode, tc module uses emulator, and config page doesn't opens on app start
-const debugMode = true;
+const debugMode = false;
 
 
 class AppConfig {
