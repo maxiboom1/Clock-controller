@@ -6,11 +6,11 @@ import path from 'path';
 const configPath = path.join(process.cwd(), 'config.json');
 
 // Set this to "true" to hardcode controller host IP for security reasons, otherwise, set to "false".
-const securityMode = true;
+const securityMode = false;
 const controlDeviceHardcodedAddr = "10.232.41.205";
 
 // In debug mode, tc module uses emulator, and config page doesn't opens on app start
-const debugMode = false;
+const debugMode = true;
 
 
 class AppConfig {
@@ -24,7 +24,6 @@ class AppConfig {
     controlDeviceHost = "127.0.0.1";
     timecodeMode = "remaining";
     controllerInput = "1";
-    requestTimeout = 3000;
     webServicePort = 4001;
 
     constructor() {

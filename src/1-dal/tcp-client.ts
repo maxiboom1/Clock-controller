@@ -12,6 +12,7 @@ class TcpClient {
     }
 
     private reconnect() {
+        console.log("recon")
         // Close the current connection if it exists
         if (this.client) {
             this.client.end();
@@ -33,12 +34,15 @@ class TcpClient {
     }
 
     public async sendAndReceiveData(dataToSend: string): Promise<string> {
+        console.log("sendAndReceiveData()")
         return new Promise((resolve, reject) => {
             if (!this.client.writable) {
                 reject();
+                console.log("offline. reconnect")
                 this.reconnect();
                 return;
             }
+            console.log("hmm.")
 
             this.client.write(dataToSend);
 
@@ -47,6 +51,8 @@ class TcpClient {
             });
         });
     }
+
+
 }
 
 const tcpClient = new TcpClient();

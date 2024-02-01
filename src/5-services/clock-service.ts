@@ -1,6 +1,5 @@
 import udpClient from "../1-dal/udp-client";
 import ClockOperation from "../2-models/clock-operation";
-import parseResponse from "../4-utils/parser";
 import tricasterService from "./tricaster-service";
 import timeConvertors from "../4-utils/timeConvertors";
 import getVmixTimecode from "./vmix-service";
@@ -47,6 +46,7 @@ async function manualMode(): Promise<void> {
 // Got HH:MM:SS string, converts it to byte array, and sends to clock. Example: 10:52:20
 function sendHMSToClock(HHMMSS:string): void {
   try {
+    log(`sending ${HHMMSS} to clock`, "clock-service");
     udpClient.send(timeConvertors.timeStringToBytes(HHMMSS), appConfig.clockHost);
     if(appConfig.clock2Enabled){
       udpClient.send(timeConvertors.timeStringToBytes(HHMMSS), appConfig.clock2Host);
@@ -70,6 +70,7 @@ function sendBufferToClock(byteArr: number[]): void {
 }
 
 function resetClock2(){
+  log("reset clock2", "clock-service");
   udpClient.send(Buffer.from(ClockOperation.SetTimeMode), appConfig.clock2Host);
 }
 
