@@ -25,12 +25,12 @@ server.listen(appConfig.webServicePort, async () => {
     // Automatically open the web config page in the default browser using dynamic import
     try {
         const open = await import('open');
-        open.default("http://localhost:" + appConfig.webServicePort + '/config');
+        if(!appConfig.debugMode){open.default("http://localhost:" + appConfig.webServicePort + '/config');}
+        console.log("Debug mode:" + appConfig.debugMode);
+        configService.processConfigData(appConfig);
     } catch (error) {
         console.error('Failed to open the config page:', error);
     }
 
     }
 );
-
-configService.processConfigData(appConfig);

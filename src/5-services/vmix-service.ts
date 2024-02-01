@@ -1,11 +1,12 @@
 import tcpClient from "../1-dal/tcp-client";
 import appConfig from "../4-utils/app-config";
+import log from "../4-utils/debugger";
 import timeConvertors from "../4-utils/timeConvertors";
 
 async function getVmixTimecode(): Promise<string> {
     try {
+        log("getVmixTimecode","vMix service");
         const input = appConfig.controllerInput
-
         const positionQuery = `XMLTEXT vmix/inputs/input[${input}]/@position\r\n`;
         const durationQuery = `XMLTEXT vmix/inputs/input[${input}]/@duration\r\n`;
         const positionData = await tcpClient.sendAndReceiveData(positionQuery);

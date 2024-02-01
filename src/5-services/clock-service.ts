@@ -5,12 +5,16 @@ import tricasterService from "./tricaster-service";
 import timeConvertors from "../4-utils/timeConvertors";
 import getVmixTimecode from "./vmix-service";
 import appConfig from "../4-utils/app-config";
+import log from "../4-utils/debugger";
 
 let resendInterval: NodeJS.Timeout | null = null;
 
-function timeMode(): void {
+async function timeMode(): Promise<void> {
+    log(`timeMode() triggered`, "clock-service");
     if (resendInterval) {clearInterval(resendInterval);resendInterval = null;}
+    log(`timeMode(): Sending cmd to clock ${appConfig.clockHost}`, "clock-service");
     udpClient.send(Buffer.from(ClockOperation.SetTimeMode), appConfig.clockHost);
+    log(`timeMode(): Sending cmd to clock ${appConfig.clockHost} - done`, "clock-service");
     if(appConfig.clock2Enabled){
       udpClient.send(Buffer.from(ClockOperation.SetTimeMode), appConfig.clock2Host);
     }
@@ -24,39 +28,28 @@ async function manualMode(): Promise<void> {
     resendInterval = setInterval(async () => {
       switch(appConfig.controlDevice){
         case "Tricaster": 
+          log("getTricasterTimecode ","clock-service manualMode()")
           const tricasterHMS = await tricasterService.getTricasterTimecode(); // Returns HHMMSS
           if(tricasterHMS !== undefined){
-            await sendHMSToClock(tricasterHMS);
+            sendHMSToClock(tricasterHMS);
           }
           break;
         case "vMix":
           const vmixHMS = await getVmixTimecode(); // Return HHMMSS
-          await sendHMSToClock(vmixHMS);
+          sendHMSToClock(vmixHMS);
           break;
       }
 
-    }, 1000);
-
-}
-
-async function getClockStatus(){
-  try {
-    const status = await sendBufferToClock(ClockOperation.GetClockStatus);
-    const statusString = status.toString('hex'); 
-    const statusObj = parseResponse(statusString);
-    return statusObj;
-  } catch (error) {
-    console.log(error);
-  }  
+    }, 500);
 
 }
 
 // Got HH:MM:SS string, converts it to byte array, and sends to clock. Example: 10:52:20
-async function sendHMSToClock(HHMMSS:string): Promise<void> {
+function sendHMSToClock(HHMMSS:string): void {
   try {
-    await udpClient.send(timeConvertors.timeStringToBytes(HHMMSS), appConfig.clockHost);
+    udpClient.send(timeConvertors.timeStringToBytes(HHMMSS), appConfig.clockHost);
     if(appConfig.clock2Enabled){
-      await udpClient.send(timeConvertors.timeStringToBytes(HHMMSS), appConfig.clock2Host);
+      udpClient.send(timeConvertors.timeStringToBytes(HHMMSS), appConfig.clock2Host);
     }
   } catch (error) {
     console.log(error);
@@ -64,22 +57,38 @@ async function sendHMSToClock(HHMMSS:string): Promise<void> {
 }
 
 // Got num array, converts it to buffer and sends to clock. Example: [165, 1, 0]
-async function sendBufferToClock(byteArr: number[]): Promise<Buffer> {
+function sendBufferToClock(byteArr: number[]): void {
   try {
-    const result = await udpClient.send(Buffer.from(byteArr), appConfig.clockHost);
+    udpClient.send(Buffer.from(byteArr), appConfig.clockHost);
     if(appConfig.clock2Enabled){
       udpClient.send(Buffer.from(byteArr), appConfig.clock2Host);
     }
-    return result;
   } catch (error) {
     console.log(error);
   }
 
 }
 
+function resetClock2(){
+  udpClient.send(Buffer.from(ClockOperation.SetTimeMode), appConfig.clock2Host);
+}
 
 export default {
   timeMode,
   manualMode,
-  getClockStatus
+  resetClock2
 }
+
+
+// Currently, its not in use
+// async function getClockStatus(){
+//   try {
+//     const status = await sendBufferToClock(ClockOperation.GetClockStatus);
+//     const statusString = status.toString('hex'); 
+//     const statusObj = parseResponse(statusString);
+//     return statusObj;
+//   } catch (error) {
+//     console.log(error);
+//   }  
+
+// }

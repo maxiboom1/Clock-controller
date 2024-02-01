@@ -1,13 +1,20 @@
 import * as fs from 'fs';
 import path from 'path';
 
-// Set this to "true" to hardcode controller host IP for security reasons, otherwise, set to "false".
-const securityMode = true;
-const controlDeviceHardcodedAddr = "10.232.41.205";
+// -------------------- App configurations, that not saved in config.json file -----------------
 
 const configPath = path.join(process.cwd(), 'config.json');
 
+// Set this to "true" to hardcode controller host IP for security reasons, otherwise, set to "false".
+const securityMode = false;
+const controlDeviceHardcodedAddr = "10.232.41.205";
+
+// In debug mode, tc module uses emulator, and config page doesn't opens on app start
+const debugMode = false;
+
+
 class AppConfig {
+    
     clockPort = 7372;
     clockHost = '192.168.0.132';
     clock2Host = '192.168.0.23';
@@ -17,7 +24,7 @@ class AppConfig {
     controlDeviceHost = "127.0.0.1";
     timecodeMode = "remaining";
     controllerInput = "1";
-    requestTimeout = 1000;
+    requestTimeout = 3000;
     webServicePort = 4001;
 
     constructor() {
@@ -75,6 +82,8 @@ class AppConfig {
         const tcHost = securityMode ? controlDeviceHardcodedAddr : this.controlDeviceHost;
         return `http://${tcHost}/v1/dictionary?key=ddr_timecode`;
     }
+
+    get debugMode(){return debugMode;}
 
     private securityMessage(){
         console.error('License service: Now allowed to change controller IP address. It will remain ' + controlDeviceHardcodedAddr);

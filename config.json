@@ -1,13 +1,13 @@
 {
   "clockPort": 7372,
-  "clockHost": "192.168.0.118",
-  "clock2Host": "192.168.0.118",
-  "clock2Enabled": true,
-  "clockMode": "Time mode",
-  "controlDevice": "vMix",
+  "clockHost": "192.168.0.132",
+  "clock2Host": "",
+  "clock2Enabled": false,
+  "clockMode": "Controller mode",
+  "controlDevice": "Tricaster",
   "controlDeviceHost": "127.0.0.1",
   "timecodeMode": "remaining",
-  "controllerInput": "1",
-  "requestTimeout": 1000,
+  "controllerInput": "DDR2",
+  "requestTimeout": 3000,
   "webServicePort": 4001
 }

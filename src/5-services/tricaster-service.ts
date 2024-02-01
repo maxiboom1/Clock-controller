@@ -1,27 +1,34 @@
 import axios from "axios";
 import appConfig from "../4-utils/app-config";
 import timeConvertors from "../4-utils/timeConvertors";
+import log from "../4-utils/debugger";
 const { parseString } = require('xml2js');
 
 async function getTricasterTimecode() {
   const ddr = appConfig.controllerInput.toLowerCase();
+  const debugMode = appConfig.debugMode;
   const tcMode = appConfig.timecodeMode;
+  const url = debugMode ? "http://localhost:4001/api/emulator" : appConfig.tricasterTimecodeURL;
   try {
-    const response = await axios.get(appConfig.tricasterTimecodeURL);
+    const response = await axios.get(url);
     const xml = response.data;
     let jsonData: any;
     parseString(xml, { explicitArray: false }, (err, result) => {
         if (err) {throw new Error(err);}
         jsonData = result;
     });
+
     if(tcMode === "remaining"){
       const clipSecondsRemaining = Math.floor(jsonData.timecode[ddr]['$'].clip_seconds_remaining);
       const tricasterHMS = timeConvertors.secondsToHMS(clipSecondsRemaining);
+      log(`${tricasterHMS} remaining (${ddr})`, "tricaster-service");
       return tricasterHMS;
     }
+
     if(tcMode === "position"){
       const clipSecondsElapsed = Math.floor(jsonData.timecode[ddr]['$'].clip_seconds_elapsed);
       const tricasterHMS = timeConvertors.secondsToHMS(clipSecondsElapsed);
+      log(`${tricasterHMS} elapsed (${ddr})`, "tricaster-service");
       return tricasterHMS;
     }
 
