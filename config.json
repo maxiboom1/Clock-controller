@@ -5,7 +5,7 @@
   "clock2Enabled": false,
   "clockMode": "Controller mode",
   "controlDevice": "Tricaster",
-  "controlDeviceHost": "127.0.0.1",
+  "controlDeviceHost": "10.232.41.205",
   "timecodeMode": "remaining",
   "controllerInput": "DDR2",
   "requestTimeout": 3000,
