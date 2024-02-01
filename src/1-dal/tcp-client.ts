@@ -29,7 +29,8 @@ class TcpClient {
         });
         this.client.on('close', () => {
             this.online = false;
-            console.log('Disconnected from the server');
+            console.log('Disconnected from the server. Try to reconnect...');
+            this.reconnect();
         });
         this.client.on('error', (err) => {
             this.online = false;
