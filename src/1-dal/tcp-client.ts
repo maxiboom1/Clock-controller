@@ -63,6 +63,7 @@ class TcpClient {
     }
 
     get isOnline(){return this.online}
+    get remoteHost(){return this.client.remoteAddress}
 }
 
 const tcpClient = new TcpClient();

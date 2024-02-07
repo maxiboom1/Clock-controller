@@ -1,7 +1,7 @@
 {
   "clockPort": 7372,
-  "clockHost": "192.168.0.118",
-  "clock2Host": "192.168.0.12",
+  "clockHost": "192.168.0.116",
+  "clock2Host": "192.168.0.118",
   "clock2Enabled": false,
   "clockMode": "Controller mode",
   "controlDevice": "vMix",

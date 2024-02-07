@@ -1,6 +1,6 @@
 # Clock controller
- Remote control for time-machines clocks
- API specs: https://www.timemachinescorp.com/wp-content/uploads/TimeMachinesControlAPI.pdf
+ 
+ ## Application description
 
  My concept is to build modular app, each module will provide methods to device.
 
@@ -14,5 +14,9 @@
 
  Also, in the future, it will be nice to add licensing mechanism.
 
- 
+ Remote control for time-machines clocksAPI specs: https://www.timemachinescorp.com/wp-content/uploads/TimeMachinesControlAPI.pdf
+
+ ## System architecture
+
+ ![Alt text](./docs/app%20scheme.JPG)
 

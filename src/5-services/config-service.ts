@@ -22,13 +22,13 @@ async function processConfigData(config: any){
         clockService.timeMode();
     }
 
-    if(tcpClient.isOnline && (config.controlDeviceHost !== appConfig.controlDeviceHost)){
-        appConfig.setConfig(config);
+    if(tcpClient.isOnline && appConfig.controlDevice === "vMix" && (config.controlDeviceHost !== tcpClient.remoteHost)){
+        console.log("reconnect (config service)");
         tcpClient.reconnect();
-    } else {
-        appConfig.setConfig(config);
-    }
-    
+    } 
+
+    appConfig.setConfig(config);
+
     
 }
 

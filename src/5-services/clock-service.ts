@@ -71,6 +71,7 @@ function sendBufferToClock(byteArr: number[]): void {
 
 function resetClock2(){
   log("reset clock2", "clock-service");
+  console.log("reset clock2",appConfig.clock2Host)
   udpClient.send(Buffer.from(ClockOperation.SetTimeMode), appConfig.clock2Host);
 }
 
