@@ -3,8 +3,7 @@ import appConfig from "../4-utils/app-config";
 import log from "../4-utils/debugger";
 import clockService from "../5-services/clock-service";
 
-async function processConfigData(config: any){
-    log("processConfigData started", "config-service");
+async function appProcessor(config: any){
     
     // If clock 2 is disabled, rest it (set to "time mode")
     if(!config.clock2Enabled){
@@ -13,12 +12,12 @@ async function processConfigData(config: any){
     }
 
     if(config.clockMode === "Controller mode"){
-        log("processConfigData, initial mode - controller", "config-service");
+        log("appProcessor, initial mode - controller", "config-service");
         clockService.manualMode();
     }
     
     if(config.clockMode === "Time mode"){
-        log("processConfigData, initial mode - time mode", "config-service");
+        log("appProcessor, initial mode - time mode", "config-service");
         clockService.timeMode();
     }
 
@@ -33,5 +32,5 @@ async function processConfigData(config: any){
 }
 
 export default {
-    processConfigData
+    appProcessor
 }

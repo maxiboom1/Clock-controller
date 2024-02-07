@@ -8,5 +8,6 @@
   "controlDeviceHost": "127.0.0.1",
   "timecodeMode": "remaining",
   "controllerInput": "1",
-  "webServicePort": 4001
+  "webServicePort": 4001,
+  "openConfigPageOnLoad": false
 }

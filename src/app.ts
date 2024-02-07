@@ -22,17 +22,15 @@ server.use("/api", dataRoutes);
 server.use(routeNotFound);
 server.use(catchAll);
 server.listen(appConfig.webServicePort, async () => {
+    
     console.log("Config webpage available on http://localhost:" + appConfig.webServicePort + '/config');
-    // Automatically open the web config page in the default browser using dynamic import
-    try {
-        const open = await import('open');
-        //if(!appConfig.debugMode){open.default("http://localhost:" + appConfig.webServicePort + '/config');}
-        console.log("Debug mode:" + appConfig.debugMode);
-        configService.processConfigData(appConfig);
-    } catch (error) {
-        console.error('Failed to open the config page:', error);
-    }
 
+    if(appConfig.openConfigPageOnLoad){
+        const open = await import('open');
+        open.default("http://localhost:" + appConfig.webServicePort + '/config');
+    }
+    console.log("Debug mode:" + appConfig.debugMode); 
+    configService.appProcessor(appConfig);
     }
 );
 

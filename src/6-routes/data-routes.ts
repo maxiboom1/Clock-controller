@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/set-config", (request: Request, response: Response, next: NextFunction) => {
     console.log("set-config", request.body);
     try {
-        configService.processConfigData(request.body);
+        configService.appProcessor(request.body);
         
     } catch (err: any) {
         next(err);
