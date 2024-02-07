@@ -5,6 +5,7 @@ import catchAll from "./3-middleware/catch-all";
 import appConfig from "./4-utils/app-config";
 import path from "path";
 import configService from "./5-services/config-service";
+import getVmixTimecode from "./5-services/vmix-service";
 
 // Web server
 const server = express();
@@ -25,7 +26,7 @@ server.listen(appConfig.webServicePort, async () => {
     // Automatically open the web config page in the default browser using dynamic import
     try {
         const open = await import('open');
-        if(!appConfig.debugMode){open.default("http://localhost:" + appConfig.webServicePort + '/config');}
+        //if(!appConfig.debugMode){open.default("http://localhost:" + appConfig.webServicePort + '/config');}
         console.log("Debug mode:" + appConfig.debugMode);
         configService.processConfigData(appConfig);
     } catch (error) {
@@ -34,3 +35,4 @@ server.listen(appConfig.webServicePort, async () => {
 
     }
 );
+

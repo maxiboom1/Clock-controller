@@ -1,3 +1,4 @@
+import tcpClient from "../1-dal/tcp-client";
 import appConfig from "../4-utils/app-config";
 import log from "../4-utils/debugger";
 import clockService from "../5-services/clock-service";
@@ -21,7 +22,13 @@ async function processConfigData(config: any){
         clockService.timeMode();
     }
 
+    if(tcpClient.isOnline && appConfig.controlDevice === "vMix" && (config.controlDeviceHost !== tcpClient.remoteHost)){
+        console.log("reconnect (config service)");
+        tcpClient.reconnect();
+    } 
+
     appConfig.setConfig(config);
+
     
 }
 
