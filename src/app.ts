@@ -5,7 +5,6 @@ import catchAll from "./3-middleware/catch-all";
 import appConfig from "./4-utils/app-config";
 import path from "path";
 import configService from "./5-services/config-service";
-import getVmixTimecode from "./5-services/vmix-service";
 
 // Web server
 const server = express();

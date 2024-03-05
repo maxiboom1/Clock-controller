@@ -4,7 +4,7 @@ import log from "../4-utils/debugger";
 import clockService from "../5-services/clock-service";
 
 async function appProcessor(config: any){
-    
+
     // If clock 2 is disabled, rest it (set to "time mode")
     if(!config.clock2Enabled){
         console.log("INFO: Clock 2 was disabled, setting it to Time Mode.")
