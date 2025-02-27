@@ -5,7 +5,6 @@ import path from 'path';
 
 const configPath = path.join(process.cwd(), 'config.json');
 
-const controlDeviceHardcodedAddr = "10.232.41.205";
 
 class AppConfig {
 
@@ -56,10 +55,11 @@ class AppConfig {
     get tricasterTimecodeURL() {
         return `http://${this.controlDeviceHost}/v1/dictionary?key=ddr_timecode`;
     }
-    
+
     get tricasterTallyURL() {
         return `http://${this.controlDeviceHost}/v1/dictionary?key=tally`;
     }
+
 }
 
 const appConfig = new AppConfig();

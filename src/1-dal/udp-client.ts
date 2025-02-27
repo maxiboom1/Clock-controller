@@ -9,7 +9,7 @@ class UDPClient {
   }
 
   public send(queryMessage: Buffer, clockAddr: string): void {
-    log(`Send to clock ${clockAddr}: ${queryMessage}`,"udp-service" )
+    //log(`Send to clock ${clockAddr}: ${queryMessage}`,"udp-service" )
     this.socket.send(queryMessage, 0, queryMessage.length, appConfig.clockPort, clockAddr, (error) => {
       if (error) {console.error(`Error sending data to ${clockAddr}:`, error);} 
     });

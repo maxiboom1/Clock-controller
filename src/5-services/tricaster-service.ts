@@ -13,7 +13,6 @@ async function getTricasterTimecode() {
       jsonData = result.tally.column;
   });
   const onair = getSourcesOnPgm(jsonData);
-  
   if(onair.includes("ddr1") || onair.includes("ddr2")){
     console.log(onair);
   }

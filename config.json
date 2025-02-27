@@ -2,10 +2,10 @@
   "clockPort": 7372,
   "clockHost": "192.168.0.132",
   "clock2Host": "192.168.0.233",
-  "clockMode": "Controller mode",
+  "clockMode": "Time mode",
   "controlDevice": "Tricaster",
-  "controlDeviceHost": "127.0.0.1",
+  "controlDeviceHost": "10.232.40.222",
   "timecodeMode": "position",
   "webServicePort": 4001,
-  "openConfigPageOnLoad": true
+  "openConfigPageOnLoad": false
 }

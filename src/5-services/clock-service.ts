@@ -33,7 +33,7 @@ async function manualMode(): Promise<void> {
 // Got HH:MM:SS string, converts it to byte array, and sends to clock. Example: 10:52:20
 function sendHMSToClock(HHMMSS:string): void {
   try {
-    log(`sending ${HHMMSS} to clock`, "clock-service");
+    //log(`sending ${HHMMSS} to clock`, "clock-service");
     udpClient.send(timeConvertors.timeStringToBytes(HHMMSS), appConfig.clockHost);
     udpClient.send(timeConvertors.timeStringToBytes(HHMMSS), appConfig.clock2Host);
   } catch (error) {
