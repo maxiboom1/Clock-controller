@@ -1,5 +1,6 @@
 import dgram, { Socket } from "dgram";
 import appConfig from "../4-utils/app-config";
+import log from "../4-utils/debugger";
 
 class UDPClient {
   private socket: Socket;
@@ -8,7 +9,7 @@ class UDPClient {
   }
 
   public send(queryMessage: Buffer, clockAddr: string): void {
-
+    log(`Send to clock ${clockAddr}: ${queryMessage}`,"udp-service" )
     this.socket.send(queryMessage, 0, queryMessage.length, appConfig.clockPort, clockAddr, (error) => {
       if (error) {console.error(`Error sending data to ${clockAddr}:`, error);} 
     });

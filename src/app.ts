@@ -28,7 +28,6 @@ server.listen(appConfig.webServicePort, async () => {
         const open = await import('open');
         open.default("http://localhost:" + appConfig.webServicePort + '/config');
     }
-    console.log("Debug mode:" + appConfig.debugMode); 
     configService.appProcessor(appConfig);
     }
 );

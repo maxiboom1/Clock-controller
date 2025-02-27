@@ -33,29 +33,25 @@
                         
                         <div class="col">
                             <span>Clock host</span>
-                            <div class="form-floating">
+                            <div class="form">
                                 <input type="text" class="form-control" id="clockHost" pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$" placeholder="Clock IP Address" required>
-                                <label for="clockHost">Clock IP address</label>
                             </div>
                         </div>
                         
                         <div class="col">
                             <span>Clock-2 host</span>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="clock2Host" pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$" placeholder="Clock2 IP Address" disabled>
-                                <label for="clock2Host">Clock2 IP address</label>
+                            <div class="form">
+                                <input type="text" class="form-control" id="clock2Host" pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$" placeholder="Clock2 IP Address" required>
                             </div>
                         </div>
 
                         <div class="col">
                             <span>Clock mode</span>
-                            <div class="form-floating ">
+                            <div class="form">
                                 <select class="form-select" id="clockMode" required>
-                                    <option value="" selected>Select..</option>
                                     <option value="1">Time mode</option>
                                     <option value="2">Controller mode</option>
                                 </select>
-                                <label for="floatingSelectGrid">Set clock mode</label>
                                 <div class="invalid-feedback">
                                     Please select a clock mode.
                                 </div>
@@ -63,20 +59,6 @@
                         </div>
 
                     </div>
-                    
-                    <!-- enableClock2 checkbox -->
-                    <div class="row g-2">
-                        <div class="col-4"></div>
-                        <div class="col">
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" id="enableClock2">
-                                <label class="form-check-label" for="enableClock2">
-                                    Turn on Clock-2
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
                     
                     <button type="submit" class="btn btn-primary btn-lg mx-auto d-block mt-5" style="width: 300px;">SET</button>
                 </form>
@@ -89,67 +71,19 @@
                     <!-- Set controller host -->
                     <div class="col">
                         <span>Controller host</span>
-                        <div class="form-floating">
+                        <div class="form">
                             <input type="email" class="form-control" id="controllerHost">
-                            <label for="floatingInputGrid">Controller ip address</label>
                         </div>
                     </div>                    
-                    
-                    <!-- Choose controller -->
-                    <div class="col">
-                        <span>Controller</span>
-                        <div class="form-floating ">
-                            <select class="form-select" id="controllerType" onchange="handleControllerChange()">
-                                <option selected>Select..</option>
-                                <option value="1">vMix</option>
-                                <option value="2">Tricaster</option>
-                            </select>
-                            <label for="controllerMode">Choose controller</label>
-                        </div>
-                    </div>
-
-                    <!-- Choose DDR1-4 -->
-                    
-                    <div class="col" id="tricasterContainer">
-                        <span>Tricaster DDR</span>
-                        <div class="form-floating ">
-                            <select class="form-select" id="tricasterDDR">
-                                <option selected>Select..</option>
-                                <option value="1">DDR1</option>
-                                <option value="2">DDR2</option>
-                                <option value="3">DDR3</option>
-                                <option value="4">DDR4</option>
-                            </select>
-                            <label for="tricasterDDR">Choose tricaster DDR to watch</label>
-                        </div>
-                    </div>
-                   
-
-                    <!-- Choose vMix input to watch -->
-                    <div class="col" id="vmixContainer">
-                        <span>vMix input</span>
-                        <div class="form-floating ">
-                            <select class="form-select" id="vmixInput">
-                                <option selected>Select..</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                            </select>
-                            <label for="tricasterDDR">Choose vMix input to watch</label>
-                        </div>
-                    </div>
 
                     <!-- Choose mode remaining/position -->
                     <div class="col" id="tcModeContainer">
                         <span>Timecode mode</span>
-                        <div class="form-floating ">
+                        <div class="form">
                             <select class="form-select" id="tcMode">
-                                <option selected>Select..</option>
                                 <option value="1">remaining</option>
                                 <option value="2">position</option>
                             </select>
-                            <label for="tcMode">Choose display timecode mode</label>
                         </div>
                     </div>
 
