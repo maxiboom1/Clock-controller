@@ -19,4 +19,5 @@
  ## System architecture
 
  ![Alt text](./docs/app%20scheme.JPG)
+ ![Alt text](./docs/Open%20WS%20to%20tally.png)
 
