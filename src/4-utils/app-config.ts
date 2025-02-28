@@ -60,6 +60,10 @@ class AppConfig {
         return `http://${this.controlDeviceHost}/v1/dictionary?key=tally`;
     }
 
+    get tricasterTallyWSURL() {
+        return `http://${this.controlDeviceHost}/v1/dictionary?key=tally`;
+    }
+
 }
 
 const appConfig = new AppConfig();

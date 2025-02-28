@@ -6,12 +6,14 @@ async function appProcessor(config: any){
 
     if(config.clockMode === "Controller mode"){
         log("appProcessor, initial mode - controller", "config-service");
-        clockService.manualMode();
+        clockService.setManualMode();
+        // Start tricaster service
     }
     
     if(config.clockMode === "Time mode"){
         log("appProcessor, initial mode - time mode", "config-service");
-        clockService.timeMode();
+        clockService.setTimeMode();
+        // Stop Tricaster service
     }
 
     appConfig.setConfig(config);
